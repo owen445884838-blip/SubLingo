@@ -1,0 +1,1974 @@
+{
+    "bomFormat": "CycloneDX",
+    "specVersion": "1.5",
+    "serialNumber": "urn:uuid:14d11308-0929-4176-a36e-d05bb2675cf2",
+    "version": 1,
+    "metadata": {
+        "timestamp": "2026-07-23T12:51:23.186906Z",
+        "component": {
+            "type": "application",
+            "group": "com.sublingo",
+            "name": "SubLingo",
+            "version": "0.1.0",
+            "purl": "pkg:apk/com.sublingo.app@0.1.0"
+        },
+        "tools": [
+            {
+                "vendor": "SubLingo",
+                "name": "Gradle releaseRuntimeClasspath inventory"
+            }
+        ]
+    },
+    "components": [
+        {
+            "type": "library",
+            "group": "androidx.activity",
+            "name": "activity",
+            "version": "1.9.1",
+            "purl": "pkg:maven/androidx.activity/activity@1.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "39530cfc0b8ff3a593b6c94b42b12780bbae2a8f5ac70e7698c43734861de7f5"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.activity",
+            "name": "activity-compose",
+            "version": "1.9.1",
+            "purl": "pkg:maven/androidx.activity/activity-compose@1.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "9406657a7540436dfd950533f10dc1c4641f7f48dba4f8d5ad67fa9891fe2eb4"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.activity",
+            "name": "activity-ktx",
+            "version": "1.9.1",
+            "purl": "pkg:maven/androidx.activity/activity-ktx@1.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "9de8f7238206325cfd195c0f8667087646c7057c923a3ff156602da2568d553f"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.annotation",
+            "name": "annotation-experimental",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.annotation/annotation-experimental@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6bd4c7c7476f8260cd3bdbb81183583e93fc9f790c27dea7dc314181cbf87aa0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.annotation",
+            "name": "annotation-jvm",
+            "version": "1.9.1",
+            "purl": "pkg:maven/androidx.annotation/annotation-jvm@1.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1e343917ebf27ba96fe4dc52b1cad7fd32b738fbc6355bb6cd5b3b305d7212d0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.appcompat",
+            "name": "appcompat",
+            "version": "1.6.1",
+            "purl": "pkg:maven/androidx.appcompat/appcompat@1.6.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "7ea5573b93ababd3bd32312451c6ea48a662b03a140dda81aebe75776a20a422"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.appcompat",
+            "name": "appcompat-resources",
+            "version": "1.6.1",
+            "purl": "pkg:maven/androidx.appcompat/appcompat-resources@1.6.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "db915dbf49357863de1669ff9fdd8e9008d65fe357af6cce9ae63043ad5f6617"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.arch.core",
+            "name": "core-common",
+            "version": "2.2.0",
+            "purl": "pkg:maven/androidx.arch.core/core-common@2.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "65308a06b1c00ee186cb9e19321383f043b993813f1522c47f4a3e3303bdba41"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.arch.core",
+            "name": "core-runtime",
+            "version": "2.2.0",
+            "purl": "pkg:maven/androidx.arch.core/core-runtime@2.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a1be5e0caa2b07623862af6ae21b3ab0718123245184d0e30dea81b53f990a47"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.autofill",
+            "name": "autofill",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.autofill/autofill@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "c9468f56e05006ea151a426c54957cd0799b8b83a579d2846dd22061f33e5ecd"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.cardview",
+            "name": "cardview",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.cardview/cardview@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1193c04c22a3d6b5946dae9f4e8c59d6adde6a71b6bd5d87fb99d82dda1afec7"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.collection",
+            "name": "collection-jvm",
+            "version": "1.5.0",
+            "purl": "pkg:maven/androidx.collection/collection-jvm@1.5.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "70b35924e4babcdffa37d0e575ee039c56a2d97123342624c48b603233704341"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.collection",
+            "name": "collection-ktx",
+            "version": "1.5.0",
+            "purl": "pkg:maven/androidx.collection/collection-ktx@1.5.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "939b4a8697640e77d83e4e8b4c4a9d18f8130198c5961194af8dd9db9dc7c353"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.animation",
+            "name": "animation-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.animation/animation-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "205bbee22092f07c314f2adeac58d1ae5e8480ba158d49fab86f1e7fc9bc2bcb"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.animation",
+            "name": "animation-core-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.animation/animation-core-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "51d895b58992d11b0e13dab784e10cb5d26aa9bb4988484f9ed8e4ad59439d33"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.foundation",
+            "name": "foundation-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.foundation/foundation-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "7e43a49faba7e694dfe1e7e29de77198f9636852c55c87df9ebb245c82874932"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.foundation",
+            "name": "foundation-layout-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.foundation/foundation-layout-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4002a244b03d2cb6312e84f295bfa014bc514b270110259220622fc7d284f3ba"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.material",
+            "name": "material-icons-core-android",
+            "version": "1.6.8",
+            "purl": "pkg:maven/androidx.compose.material/material-icons-core-android@1.6.8",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6e49942ac61047f18406e74690ec3049c43f23feca503543849b0305bba593fe"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.material",
+            "name": "material-ripple-android",
+            "version": "1.7.0",
+            "purl": "pkg:maven/androidx.compose.material/material-ripple-android@1.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a75738b8df3984e3fe1e8e49c4b5fb3a0227fa0620d3540edd8f6a5a7799c7c0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.material3",
+            "name": "material3-android",
+            "version": "1.3.1",
+            "purl": "pkg:maven/androidx.compose.material3/material3-android@1.3.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "752473d4ea271f822858c313ec0d857ab05249021906f3005b30f2b1fcd0dcc0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.runtime",
+            "name": "runtime-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.runtime/runtime-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "65a9e3c6b496e255bb54268ff4e44d3a6a316434d7e9310bdd940f41c2e0b6e7"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.runtime",
+            "name": "runtime-annotation-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.runtime/runtime-annotation-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6b22eab92c57305facaf62cc44f22aaa27442502cce41b7687b0d6617286b3a5"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.runtime",
+            "name": "runtime-retain-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.runtime/runtime-retain-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "2ad7decff6e10ca43d46d465442fb37b061634af61a749559e1f9415ecdab06a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.runtime",
+            "name": "runtime-saveable-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.runtime/runtime-saveable-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4d2fb4f7fa483c6154a305eb04706b6b7a36e638db644ada6977fb58b287751a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "d98b1e5a0260b58d5ad39286dd928b8c50d56ed2fef2ce573120f4e7c91ec3e2"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-geometry-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-geometry-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "36f739faff8aee7830198954ff9bd84c2ae993ebb38aaf0c600c8263131606b9"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-graphics-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-graphics-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4a932cbb69c9603b9d132671a349bbf0486fbcf75652a3b2b09c40fb97ce31ce"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-text-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-text-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6671af385db1056789d2594fe5b959bcfc0807ad77872685a4ff56d0955dd762"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-tooling-preview-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-tooling-preview-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "3835061e770ade81b578d03d863c9f551791e9dbeb911cc5a55afc230d6cc03e"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-unit-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-unit-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ec47f6599111178fb81d3959503142d583ff735e3313496e845db3794393879a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.compose.ui",
+            "name": "ui-util-android",
+            "version": "1.11.0",
+            "purl": "pkg:maven/androidx.compose.ui/ui-util-android@1.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "bde77a7009b7e38ddf4cd9212581474b76f29f1190e912441b86efa1a39cd7c1"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.concurrent",
+            "name": "concurrent-futures",
+            "version": "1.1.0",
+            "purl": "pkg:maven/androidx.concurrent/concurrent-futures@1.1.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "0ce067c514a0d1049d1bebdf709e344ed3266fe9744275682937cdcb13334e9e"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.constraintlayout",
+            "name": "constraintlayout",
+            "version": "2.0.1",
+            "purl": "pkg:maven/androidx.constraintlayout/constraintlayout@2.0.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ec15b5d4a2eff07888bc1499ce2e2c6efe24c0ed60cc57b08c9dc4b6fd3c2189"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.constraintlayout",
+            "name": "constraintlayout-solver",
+            "version": "2.0.1",
+            "purl": "pkg:maven/androidx.constraintlayout/constraintlayout-solver@2.0.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b23732edbb3511d937fea1ffef047b0e6c001b50c1921f0d959fc384d706ec6a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.coordinatorlayout",
+            "name": "coordinatorlayout",
+            "version": "1.1.0",
+            "purl": "pkg:maven/androidx.coordinatorlayout/coordinatorlayout@1.1.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "44a9e30abf56af1025c52a0af506fee9c4131aa55efda52f9fd9451211c5e8cb"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.core",
+            "name": "core",
+            "version": "1.16.0",
+            "purl": "pkg:maven/androidx.core/core@1.16.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6bf03d39dbe3744acce227d3b697374c3625aae1025fbec8ad9fd7bd58bce431"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.core",
+            "name": "core-ktx",
+            "version": "1.16.0",
+            "purl": "pkg:maven/androidx.core/core-ktx@1.16.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1766dbd82f64a12dcd359ecb6f15f3cf35db4d66d22961a7c51b2ffc6468314c"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.core",
+            "name": "core-viewtree",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.core/core-viewtree@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "dc1b678d58ebcf2bfa1587be68ff826694ce3d221251b9ef30d4d4b36297e6de"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.cursoradapter",
+            "name": "cursoradapter",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.cursoradapter/cursoradapter@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a81c8fe78815fa47df5b749deb52727ad11f9397da58b16017f4eb2c11e28564"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.customview",
+            "name": "customview",
+            "version": "1.1.0",
+            "purl": "pkg:maven/androidx.customview/customview@1.1.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "01f76ab043770a97b054046f9815717b82ce0355c02967d16c61981359dc189a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.customview",
+            "name": "customview-poolingcontainer",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.customview/customview-poolingcontainer@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "3584102fc49bf399c56e3b7be4bfe12000c46112320cd8cf85cc0a8f93f3e752"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.documentfile",
+            "name": "documentfile",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.documentfile/documentfile@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "865a061ef2fad16522f8433536b8d47208c46ff7c7745197dfa1eeb481869487"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.drawerlayout",
+            "name": "drawerlayout",
+            "version": "1.1.1",
+            "purl": "pkg:maven/androidx.drawerlayout/drawerlayout@1.1.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "2c5f0dca378eb78ca2c4403f9889c77daa3059302260f26a07fe9f63c08926fe"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.dynamicanimation",
+            "name": "dynamicanimation",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.dynamicanimation/dynamicanimation@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ce005162c229bf308d2d5b12fb6cad0874069cbbeaccee63a8193bd08d40de04"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.emoji2",
+            "name": "emoji2",
+            "version": "1.4.0",
+            "purl": "pkg:maven/androidx.emoji2/emoji2@1.4.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "433febd3434a45667176c76a64f3f205ca6335a6b544c5b5d57f25a38a375242"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.emoji2",
+            "name": "emoji2-views-helper",
+            "version": "1.4.0",
+            "purl": "pkg:maven/androidx.emoji2/emoji2-views-helper@1.4.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ed5d3ed772a5fbf0d570f7526f585cd61a180e60f9372584c328a68e2cff3375"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.exifinterface",
+            "name": "exifinterface",
+            "version": "1.3.7",
+            "purl": "pkg:maven/androidx.exifinterface/exifinterface@1.3.7",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "0e8f1832266c5b0667ad3d3b1098e624e49a09075493a014a7e88af01fd30ad3"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.fragment",
+            "name": "fragment",
+            "version": "1.5.1",
+            "purl": "pkg:maven/androidx.fragment/fragment@1.5.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "82b04780eda21b0a5eea02475415887a1cadfb368b371221aeb40703c067f338"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.graphics",
+            "name": "graphics-path",
+            "version": "1.0.1",
+            "purl": "pkg:maven/androidx.graphics/graphics-path@1.0.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8ca4032b6d79b351f0b59ad4b580eddbb9423e1652f7c958830687f1eee2ec03"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.hilt",
+            "name": "hilt-common",
+            "version": "1.2.0",
+            "purl": "pkg:maven/androidx.hilt/hilt-common@1.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6b09081fd5a10de569b4be6463b146f6045bb18919bf309aff064980b6310371"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.hilt",
+            "name": "hilt-navigation",
+            "version": "1.2.0",
+            "purl": "pkg:maven/androidx.hilt/hilt-navigation@1.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8ba9e996e40c5c38bcfeacdb275286d3ab10fdf75aadda14d8842b78810ef0db"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.hilt",
+            "name": "hilt-navigation-compose",
+            "version": "1.2.0",
+            "purl": "pkg:maven/androidx.hilt/hilt-navigation-compose@1.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "e69abbb3f177893b57a596fdcc5ee1f4d7f2385241ac3765c3d7b9c50c9db84e"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.hilt",
+            "name": "hilt-work",
+            "version": "1.2.0",
+            "purl": "pkg:maven/androidx.hilt/hilt-work@1.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8f02b962a84b686e4a4749db40ec884d97a7439ff9191a9a26e46e69879e4bf8"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.interpolator",
+            "name": "interpolator",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.interpolator/interpolator@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "33193135a64fe21fa2c35eec6688f1a76e512606c0fc83dc1b689e37add7732a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.legacy",
+            "name": "legacy-support-core-utils",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.legacy/legacy-support-core-utils@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a7edcf01d5b52b3034073027bc4775b78a4764bb6202bb91d61c829add8dd1c7"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-common-java8",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-common-java8@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "497dd84de9f2fd46324f25f9a3af032d3a23d087e87af515c4b19435f6d6a651"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-common-jvm",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-common-jvm@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "37d89b2101f074ac6c260917dabb185607645ee200aa3018c7c5bde70edcf184"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-livedata",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-livedata@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f240c2c94a96d4a5eae5d379c2a8589d426a33b989d83ae9f0e01f69502c0181"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-livedata-core",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-livedata-core@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ea866f0c379d1f92837994010ab5ac0a5d5499dbab521efc71b3bc2b497d6ba4"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-livedata-core-ktx",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-livedata-core-ktx@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f55b7a8d433e9b8163154ccaa42fa2be55c70cd1ede5eeea521a4b4b884dd4fe"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-process",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-process@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4784b8d083c211e076d9115bfa1737f7e0f62b553e801cf50caa4400e34a95d6"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-runtime-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-runtime-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "86f16a1330eb23600ba90d0334b3e1db38d3a30c8b1efcd92ca21aa85afa8173"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-runtime-compose-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-runtime-compose-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b6803f906a89fd85c77df343dd4aeeb349125ca79e12d55d68d4cf42f42231f6"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-runtime-ktx-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-runtime-ktx-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "970199c9ed1ac13d620aa8de7f8abbc28ce80653c3ce328d0ac2f15272b56e1b"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-service",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-service@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "674155d592d5de18175ef0727442f7827a86cf8fe68d9927ba6a4140b69a5bc9"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-viewmodel",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-viewmodel@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "cab404b05d5faed209104a2aef14c0cbb316ab9fabe4a8f037b043e5d2f43435"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-viewmodel-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-viewmodel-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4b236b2e504db5ca5d09334fef05aa8cdc31ee35a433c3aa4d0420efa9613332"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-viewmodel-compose-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-viewmodel-compose-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f7825a08ca661de84044b6891293084bea8fbcc84aa08d8c13a3c558fc5956c9"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-viewmodel-ktx",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-viewmodel-ktx@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b7d58bb86bb8e2ccc607d1f8570e714810f7cfb3feba37d375ff1646383435a1"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.lifecycle",
+            "name": "lifecycle-viewmodel-savedstate-android",
+            "version": "2.9.4",
+            "purl": "pkg:maven/androidx.lifecycle/lifecycle-viewmodel-savedstate-android@2.9.4",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "079441c43fa3ff8ea7a02df3b12eec483c3e57583f832cfaff663750527c1421"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.loader",
+            "name": "loader",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.loader/loader@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "11f735cb3b55c458d470bed9e25254375b518b4b1bad6926783a7026db0f5025"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.localbroadcastmanager",
+            "name": "localbroadcastmanager",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.localbroadcastmanager/localbroadcastmanager@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "e71c328ceef5c4a7d76f2d86df1b65d65fe2acf868b1a4efd84a3f34336186d8"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media",
+            "name": "media",
+            "version": "1.7.0",
+            "purl": "pkg:maven/androidx.media/media@1.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "81a199ee87c6d3d59fb35f7dbec71b3f1d507128611099b6ac3a4b1c5a0bf1f9"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-common",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-common@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "973e5e7b0ecf8e6c8cd825cab35145b84c56020af7c3ec52815e595ef71baa16"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-container",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-container@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "65b6d22c96dfb5ce76754b08f5b004ee0dbdbe60793c5eab9f95c1f54f95f4b0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-database",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-database@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "2170ae6448cd499fc570dafa81e5687ad813995b7c2b7ff6801acaaa9a88bb4a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-datasource",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-datasource@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1c0bb41ee88a6bfaf24720bbfe2d29a033abad21c30e0921efbdce6c1fa28842"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-decoder",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-decoder@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f7d97c5a39dca3c3c21bc8a70145d931d8633ed0dae89198c370e7b7e3c3f183"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-exoplayer",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-exoplayer@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "66cd0f99209191660823d32c8fc329e383a8a7ff33e0d676632387361abcba70"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-extractor",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-extractor@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1f51e4633e1e6137f0a4b80552afc399e269208b700352f96543d4513be6bf28"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.media3",
+            "name": "media3-ui",
+            "version": "1.4.1",
+            "purl": "pkg:maven/androidx.media3/media3-ui@1.4.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ea604f1a88fe691b1d4dab8ae3a3de110729341629dd69311ee83611e32c97b2"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.navigation",
+            "name": "navigation-common",
+            "version": "2.8.0",
+            "purl": "pkg:maven/androidx.navigation/navigation-common@2.8.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8fdb6996c51d3ee3f2cd0d75da0407781cb2646658090e8416ce617a13a46d6d"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.navigation",
+            "name": "navigation-common-ktx",
+            "version": "2.8.0",
+            "purl": "pkg:maven/androidx.navigation/navigation-common-ktx@2.8.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "328a8d811891ada8ea4ad6c9715f55c435f2b4b9bce3c1c8863b0d8d7e1d0173"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.navigation",
+            "name": "navigation-compose",
+            "version": "2.8.0",
+            "purl": "pkg:maven/androidx.navigation/navigation-compose@2.8.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "09c4866ed227d75989569a64127ff3800d59317e1f051086c16ca51762b257c2"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.navigation",
+            "name": "navigation-runtime",
+            "version": "2.8.0",
+            "purl": "pkg:maven/androidx.navigation/navigation-runtime@2.8.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "de61b206d6f5fcf50ac1bffffcc21563e784831baa29880b44ad9e4d33d5ba88"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.navigation",
+            "name": "navigation-runtime-ktx",
+            "version": "2.8.0",
+            "purl": "pkg:maven/androidx.navigation/navigation-runtime-ktx@2.8.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "81e65aa0b48dca71216af1801f943b488fef174ec53d886c14f16bd4b1f5c64b"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.print",
+            "name": "print",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.print/print@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1d5c7f3135a1bba661fc373fd72e11eb0a4adbb3396787826dd8e4190d5d9edd"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.profileinstaller",
+            "name": "profileinstaller",
+            "version": "1.4.0",
+            "purl": "pkg:maven/androidx.profileinstaller/profileinstaller@1.4.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "d502141fcce902430f62b674c32aecd0f75262e7ee2cd15c74adb617cd13130a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.recyclerview",
+            "name": "recyclerview",
+            "version": "1.3.0",
+            "purl": "pkg:maven/androidx.recyclerview/recyclerview@1.3.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "d65928a00f63589a49e21925412e0f48852f89254b07b03c030d560f91effc88"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.resourceinspection",
+            "name": "resourceinspection-annotation",
+            "version": "1.0.1",
+            "purl": "pkg:maven/androidx.resourceinspection/resourceinspection-annotation@1.0.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8cff870ec6fb31db48a52f4a792335b4bf8de07e03bd37823181526433ccd5cb"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.room",
+            "name": "room-common",
+            "version": "2.6.1",
+            "purl": "pkg:maven/androidx.room/room-common@2.6.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "99326d3eeca4a64671bc8802f1e45f4e6b348e8c7faba230c3854d316809ffcf"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.room",
+            "name": "room-ktx",
+            "version": "2.6.1",
+            "purl": "pkg:maven/androidx.room/room-ktx@2.6.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "da4c0cba7efcafa29fbeab1db41984238f25c1a33612c1d60d63b995968d70ca"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.room",
+            "name": "room-runtime",
+            "version": "2.6.1",
+            "purl": "pkg:maven/androidx.room/room-runtime@2.6.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "69624fd7add6ce5bfcc12362cd427341d2910e277ed5a6fcc46132a4899114d0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.savedstate",
+            "name": "savedstate-android",
+            "version": "1.3.2",
+            "purl": "pkg:maven/androidx.savedstate/savedstate-android@1.3.2",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1e26f137705596d09d3f4f52559a29026d9a1a6688be7f1a948316a4f1e39b20"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.savedstate",
+            "name": "savedstate-compose-android",
+            "version": "1.3.2",
+            "purl": "pkg:maven/androidx.savedstate/savedstate-compose-android@1.3.2",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "93426691f25441cc3179494b25f401a8a468aabbee4c40b90c0327413fd65523"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.savedstate",
+            "name": "savedstate-ktx",
+            "version": "1.3.2",
+            "purl": "pkg:maven/androidx.savedstate/savedstate-ktx@1.3.2",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1c300732ece8e9d0001fb19cc693b0f77f19e77cdf90ca5c4cd56d5e6951d02b"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.sqlite",
+            "name": "sqlite",
+            "version": "2.4.0",
+            "purl": "pkg:maven/androidx.sqlite/sqlite@2.4.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "bb7fa113112f7e4857496e222e3051d73a910add74bf40761e1bdae55b0216af"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.sqlite",
+            "name": "sqlite-framework",
+            "version": "2.4.0",
+            "purl": "pkg:maven/androidx.sqlite/sqlite-framework@2.4.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ca6e503322b2e60374c2b36c95c50b16709d9388fe36e80fb23de1fbf7a6eb95"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.startup",
+            "name": "startup-runtime",
+            "version": "1.1.1",
+            "purl": "pkg:maven/androidx.startup/startup-runtime@1.1.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "e0a6329a371262fe4c450372b70fdaf33b769ef6917094723787cfce896b1dd3"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.tracing",
+            "name": "tracing",
+            "version": "1.2.0",
+            "purl": "pkg:maven/androidx.tracing/tracing@1.2.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6faa90390d1fdbf0adb9a99bf99de67b94c6c6f35aea9510593a9d17973736a2"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.transition",
+            "name": "transition",
+            "version": "1.6.0",
+            "purl": "pkg:maven/androidx.transition/transition@1.6.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "248c45e1254d31181d2047b0b01394f09a2e539a5d9e89b773d53c62c96860f6"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.vectordrawable",
+            "name": "vectordrawable",
+            "version": "1.1.0",
+            "purl": "pkg:maven/androidx.vectordrawable/vectordrawable@1.1.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "46fd633ac01b49b7fcabc263bf098c5a8b9e9a69774d234edcca04fb02df8e26"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.vectordrawable",
+            "name": "vectordrawable-animated",
+            "version": "1.1.0",
+            "purl": "pkg:maven/androidx.vectordrawable/vectordrawable-animated@1.1.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "76da2c502371d9c38054df5e2b248d00da87809ed058f3363eae87ce5e2403f8"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.versionedparcelable",
+            "name": "versionedparcelable",
+            "version": "1.1.1",
+            "purl": "pkg:maven/androidx.versionedparcelable/versionedparcelable@1.1.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "57e8d93260d18d5b9007c9eed3c64ad159de90c8609ebfc74a347cbd514535a4"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.viewpager",
+            "name": "viewpager",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.viewpager/viewpager@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "147af4e14a1984010d8f155e5e19d781f03c1d70dfed02a8e0d18428b8fc8682"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.viewpager2",
+            "name": "viewpager2",
+            "version": "1.0.0",
+            "purl": "pkg:maven/androidx.viewpager2/viewpager2@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "e95c0031d4cc247cd48196c6287e58d2cee54d9c79b85afea7c90920330275af"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.window",
+            "name": "window",
+            "version": "1.5.0",
+            "purl": "pkg:maven/androidx.window/window@1.5.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "5de2d48aa578402f46deb5294a955cee62f0c7d8c1840ef626fc7afb8abe22f9"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.window",
+            "name": "window-core-android",
+            "version": "1.5.0",
+            "purl": "pkg:maven/androidx.window/window-core-android@1.5.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "d0d50db0756194a6d49a66ad8dafd17b24b4c5fbd8379375056e2eb9bdfeaf22"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.work",
+            "name": "work-runtime",
+            "version": "2.9.1",
+            "purl": "pkg:maven/androidx.work/work-runtime@2.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1be76486b894af179462941a39cab242b00d7235c3aeb4d756f45262b0c2e4a3"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "androidx.work",
+            "name": "work-runtime-ktx",
+            "version": "2.9.1",
+            "purl": "pkg:maven/androidx.work/work-runtime-ktx@2.9.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8f4cc53ac1879665b14d2f17ad4fbcb3045a4b74774250b99829b1c13f7b7728"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.fasterxml.jackson.core",
+            "name": "jackson-annotations",
+            "version": "2.11.1",
+            "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.11.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "045e61b0b4a347d12b86cf2d0e776dea6a79204ae12095c2b08906d29e594a5a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.fasterxml.jackson.core",
+            "name": "jackson-core",
+            "version": "2.11.1",
+            "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.11.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "25461dbfb431cb48e30118a0277671de8e8a56a3b1198492e24b2fb605d7575e"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.fasterxml.jackson.core",
+            "name": "jackson-databind",
+            "version": "2.11.1",
+            "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.11.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b486be39d9ff4ae8bc7782792f2ea70f3a7bdaee5bd13780d295d7674231afd6"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.accompanist",
+            "name": "accompanist-drawablepainter",
+            "version": "0.32.0",
+            "purl": "pkg:maven/com.google.accompanist/accompanist-drawablepainter@0.32.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "680d27950f91ba186aa14522ad019dad92c702248d110ebdd6c497734abd7da0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.android.material",
+            "name": "material",
+            "version": "1.12.0",
+            "purl": "pkg:maven/com.google.android.material/material@1.12.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4a672941b626b9ab91ae893ed22598ea53ad69125c858c0a59fa9b90daa5cb08"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.code.findbugs",
+            "name": "jsr305",
+            "version": "3.0.2",
+            "purl": "pkg:maven/com.google.code.findbugs/jsr305@3.0.2",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.dagger",
+            "name": "dagger",
+            "version": "2.52",
+            "purl": "pkg:maven/com.google.dagger/dagger@2.52",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "dfb8e83020786daefbd64335ce0e0ebf01646a1b407fb77a27e052baf42df458"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.dagger",
+            "name": "dagger-lint-aar",
+            "version": "2.52",
+            "purl": "pkg:maven/com.google.dagger/dagger-lint-aar@2.52",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ef0a0cb49af7181d0b2edbbd332cba733a5e07b7d53a8aede109655b2701df1a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.dagger",
+            "name": "hilt-android",
+            "version": "2.52",
+            "purl": "pkg:maven/com.google.dagger/hilt-android@2.52",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "51efd04ac1bb0e81b56a8979b5a99c41e09a410aef6b86b1a25630db0c79c55d"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.dagger",
+            "name": "hilt-core",
+            "version": "2.52",
+            "purl": "pkg:maven/com.google.dagger/hilt-core@2.52",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "127d691360558095948ef950191d7f0b10dbffadf0d47bf0ce9a75b0dc691947"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.errorprone",
+            "name": "error_prone_annotations",
+            "version": "2.15.0",
+            "purl": "pkg:maven/com.google.errorprone/error_prone_annotations@2.15.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "067047714349e7789a5bdbfad9d1c0af9f3a1eb28c55a0ee3f68e682f905c4eb"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.guava",
+            "name": "failureaccess",
+            "version": "1.0.2",
+            "purl": "pkg:maven/com.google.guava/failureaccess@1.0.2",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8a8f81cf9b359e3f6dfa691a1e776985c061ef2f223c9b2c80753e1b458e8064"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.guava",
+            "name": "guava",
+            "version": "33.0.0-android",
+            "purl": "pkg:maven/com.google.guava/guava@33.0.0-android",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "640535014a304c50221abad19d6b22a096f13119c7c447a655cc1e009a32208d"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.google.guava",
+            "name": "listenablefuture",
+            "version": "9999.0-empty-to-avoid-conflict-with-guava",
+            "purl": "pkg:maven/com.google.guava/listenablefuture@9999.0-empty-to-avoid-conflict-with-guava",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.squareup.okhttp3",
+            "name": "logging-interceptor",
+            "version": "4.12.0",
+            "purl": "pkg:maven/com.squareup.okhttp3/logging-interceptor@4.12.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f3e8d5f0903c250c2b55d2f47fcfe008e80634385da8385161c7a63aaed0c74c"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.squareup.okhttp3",
+            "name": "okhttp",
+            "version": "4.12.0",
+            "purl": "pkg:maven/com.squareup.okhttp3/okhttp@4.12.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b1050081b14bb7a3a7e55a4d3ef01b5dcfabc453b4573a4fc019767191d5f4e0"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.squareup.okio",
+            "name": "okio-jvm",
+            "version": "3.9.0",
+            "purl": "pkg:maven/com.squareup.okio/okio-jvm@3.9.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ddc386ff14bd25d5c934167196eaf45b18de4f28e1c55a4db37ae594cbfd37e4"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.squareup.retrofit2",
+            "name": "converter-kotlinx-serialization",
+            "version": "2.11.0",
+            "purl": "pkg:maven/com.squareup.retrofit2/converter-kotlinx-serialization@2.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "4853591a285de90dac3b0ac98d3cbb7325dc37afe675b7dd6990431963067256"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "com.squareup.retrofit2",
+            "name": "retrofit",
+            "version": "2.11.0",
+            "purl": "pkg:maven/com.squareup.retrofit2/retrofit@2.11.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "9f4fbbce70728584fbeed38d4061f36d4477e89bca74b4e2ac8aeb6819b0fe43"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "commons-io",
+            "name": "commons-io",
+            "version": "2.5",
+            "purl": "pkg:maven/commons-io/commons-io@2.5",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a10418348d234968600ccb1d988efcbbd08716e1d96936ccc1880e7d22513474"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.coil-kt",
+            "name": "coil",
+            "version": "2.7.0",
+            "purl": "pkg:maven/io.coil-kt/coil@2.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "6e8e46eb813c7290c5ae9954d43f3ffa022c0500096ed4585801a38262b3f851"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.coil-kt",
+            "name": "coil-base",
+            "version": "2.7.0",
+            "purl": "pkg:maven/io.coil-kt/coil-base@2.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f45c1e118038266734321f54c3b84ce2d52b491bb00481134724ac33d3d5e2b2"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.coil-kt",
+            "name": "coil-compose",
+            "version": "2.7.0",
+            "purl": "pkg:maven/io.coil-kt/coil-compose@2.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "8d2ead07c9c9a08696be52a03e689a4afe57d57610e7bf9f05fd88893ee76935"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.coil-kt",
+            "name": "coil-compose-base",
+            "version": "2.7.0",
+            "purl": "pkg:maven/io.coil-kt/coil-compose-base@2.7.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "2885960db57beb8a7d521810386f48b98b2c21c0350bfd9d9e80d812d25b2eb1"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.github.junkfood02.youtubedl-android",
+            "name": "aria2c",
+            "version": "0.18.1",
+            "purl": "pkg:maven/io.github.junkfood02.youtubedl-android/aria2c@0.18.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1dc1fff42d18b42ba9a60a5688530d7f14dda8bf9450178b18ccd84a1bff4311"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.github.junkfood02.youtubedl-android",
+            "name": "common",
+            "version": "0.18.1",
+            "purl": "pkg:maven/io.github.junkfood02.youtubedl-android/common@0.18.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "e0c0530bdbdf203e1598e900085d3582e27360731872872f3a67f23a9b24c0b5"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.github.junkfood02.youtubedl-android",
+            "name": "ffmpeg",
+            "version": "0.18.1",
+            "purl": "pkg:maven/io.github.junkfood02.youtubedl-android/ffmpeg@0.18.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "0a87ffa6cf912b0fe76c1a99b9107f543ee2f247935fae2c71f0822eb7bc5f49"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "io.github.junkfood02.youtubedl-android",
+            "name": "library",
+            "version": "0.18.1",
+            "purl": "pkg:maven/io.github.junkfood02.youtubedl-android/library@0.18.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "579b5fb480892b1abc2b218c2089699d52759cc8d7ba256bf876453f0365faef"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "jakarta.inject",
+            "name": "jakarta.inject-api",
+            "version": "2.0.1",
+            "purl": "pkg:maven/jakarta.inject/jakarta.inject-api@2.0.1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f7dc98062fccf14126abb751b64fab12c312566e8cbdc8483598bffcea93af7c"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "javax.inject",
+            "name": "javax.inject",
+            "version": "1",
+            "purl": "pkg:maven/javax.inject/javax.inject@1",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.apache.commons",
+            "name": "commons-compress",
+            "version": "1.12",
+            "purl": "pkg:maven/org.apache.commons/commons-compress@1.12",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "2c1542faf343185b7cab9c3d55c8ae5471d6d095d3887a4adefdbdf2984dc0b6"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains",
+            "name": "annotations",
+            "version": "23.0.0",
+            "purl": "pkg:maven/org.jetbrains/annotations@23.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlin",
+            "name": "kotlin-stdlib",
+            "version": "2.1.20",
+            "purl": "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib@2.1.20",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1bcc74e8ce84e2c25eaafde10f1248349cce3062b6e36978cbeec610db1e930a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlin",
+            "name": "kotlin-stdlib-jdk7",
+            "version": "1.9.0",
+            "purl": "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk7@1.9.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b7979a7aac94055f0d9f1fd3b47ce5ffe1cb6032a842ba9fbe7186f085289178"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlin",
+            "name": "kotlin-stdlib-jdk8",
+            "version": "1.9.0",
+            "purl": "pkg:maven/org.jetbrains.kotlin/kotlin-stdlib-jdk8@1.9.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "a59fa24fdf1ffb594baecdbf0fd10010f977cea10236d487fe3464977a7377fa"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlinx",
+            "name": "kotlinx-coroutines-android",
+            "version": "1.9.0",
+            "purl": "pkg:maven/org.jetbrains.kotlinx/kotlinx-coroutines-android@1.9.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "bd783acd2f9738845d58380f46f45b5cde95d0cb03027d56725338b26bfc4d72"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlinx",
+            "name": "kotlinx-coroutines-core-jvm",
+            "version": "1.9.0",
+            "purl": "pkg:maven/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm@1.9.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "ad89c2892235e670f222d819cb3d81188143cb19a05b59df9889ae4269f5c70a"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlinx",
+            "name": "kotlinx-serialization-core-jvm",
+            "version": "1.7.3",
+            "purl": "pkg:maven/org.jetbrains.kotlinx/kotlinx-serialization-core-jvm@1.7.3",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "f0adde45864144475385cf4aa7e0b7feb27f61fcf9472665ed98cc971b06b1eb"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jetbrains.kotlinx",
+            "name": "kotlinx-serialization-json-jvm",
+            "version": "1.7.3",
+            "purl": "pkg:maven/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm@1.7.3",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "b1e9138499ed8d20375edda3f2b1c95f3103a258eff6af9edc5ea07100f2b29c"
+                }
+            ]
+        },
+        {
+            "type": "library",
+            "group": "org.jspecify",
+            "name": "jspecify",
+            "version": "1.0.0",
+            "purl": "pkg:maven/org.jspecify/jspecify@1.0.0",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "1fad6e6be7557781e4d33729d49ae1cdc8fdda6fe477bb0cc68ce351eafdfbab"
+                }
+            ]
+        }
+    ]
+}

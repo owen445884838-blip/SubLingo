@@ -1,0 +1,23 @@
+SubLingo
+Copyright (C) 2026 SubLingo contributors
+
+This program is free software licensed under the GNU General Public License,
+version 3 or (at your option) any later version. See LICENSE.
+
+SubLingo packages and uses third-party open-source software. The generated
+release dependency inventory is stored in THIRD_PARTY_NOTICES.md and
+sbom/sublingo-release.cdx.json.
+
+Important bundled/runtime components include:
+
+- youtubedl-android and yt-dlp (GPL-3.0 family; verify upstream notices for
+  the exact packaged version before every public distribution)
+- FFmpeg and aria2c runtime packages supplied by youtubedl-android
+- AndroidX, Jetpack Compose, Media3, Room, WorkManager, Hilt, OkHttp,
+  Retrofit, Kotlin, kotlinx.serialization, Coil, and Material Components
+- The bundled basic English-Chinese dictionary derived from ECDICT; ECDICT
+  is distributed under the MIT License according to its upstream project
+
+This file is an engineering inventory, not legal advice. A distributor must
+retain all upstream notices and provide the corresponding source required by
+the applicable licenses for the exact shipped binaries.

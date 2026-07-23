@@ -1,0 +1,6 @@
+ECDICT
+https://github.com/skywind3000/ECDICT
+
+SubLingo bundles a filtered 45,000-entry mobile SQLite dictionary generated from ECDICT and can
+optionally download the full ECDICT data set for on-device conversion into an application-private
+SQLite index. ECDICT is distributed under the MIT License.

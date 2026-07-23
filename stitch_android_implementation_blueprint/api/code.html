@@ -1,0 +1,256 @@
+<!DOCTYPE html><html class="light" lang="zh" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d9d9e6",
+                        "tertiary": "#993100",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b8c3ff",
+                        "surface": "#fbf8ff",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-background": "#191b24",
+                        "surface-container-lowest": "#ffffff",
+                        "transcription-gray": "#F5F7FA",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001356",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#124af0",
+                        "tertiary-fixed": "#ffdbcf",
+                        "secondary-fixed": "#dfe0ff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-secondary-container": "#fffbff",
+                        "outline": "#747688",
+                        "primary-container": "#2e5bff",
+                        "success-green": "#4CAF50",
+                        "on-secondary-fixed": "#000d5f",
+                        "on-error": "#ffffff",
+                        "surface-container": "#ededfa",
+                        "surface-container-high": "#e7e7f4",
+                        "on-primary": "#ffffff",
+                        "primary": "#0040e0",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-container-highest": "#e2e1ef",
+                        "inverse-surface": "#2e303a",
+                        "background": "#fbf8ff",
+                        "secondary": "#3b4ecb",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#bbc3ff",
+                        "outline-variant": "#c4c5d9",
+                        "on-tertiary-container": "#ffece6",
+                        "primary-fixed": "#dde1ff",
+                        "surface-bright": "#fbf8ff",
+                        "error": "#ba1a1a",
+                        "knowledge-indigo": "#3F51B5",
+                        "on-primary-container": "#efefff",
+                        "surface-container-low": "#f3f2ff",
+                        "on-surface": "#191b24",
+                        "on-surface-variant": "#434656",
+                        "on-secondary-fixed-variant": "#2035b5",
+                        "learning-blue": "#2196F3",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "review-amber": "#FFC107",
+                        "surface-variant": "#e2e1ef",
+                        "tertiary-container": "#c24100",
+                        "secondary-container": "#5568e6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "edge-margin": "16px",
+                        "touch-target": "48px",
+                        "baseline": "4px",
+                        "card-padding": "20px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "body-lg-zh": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md-zh": ["Inter"],
+                        "body-lg-en": ["Inter"],
+                        "body-md-en": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg-zh": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md-zh": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                        "body-lg-en": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "body-md-en": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    }catch(_e){}</script><style data-emotion="css" data-s=""></style></head><body class="bg-[#fdfaf0] text-gray-800 min-h-screen pb-safe antialiased flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="pb-6 px-6 pt-12 flex flex-col items-center w-full max-w-[430px] z-10" data-purpose="app-header">
+<div class="w-full flex justify-center mb-2">
+<span class="text-[32px] font-bold tracking-tight text-[#2e303a]" style="font-family: Inter, sans-serif;">SubLingo</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-[430px] px-5 pt-2 pb-28 flex flex-col space-y-8">
+<h1 class="text-3xl font-bold text-[#2e303a] mb-2">设置</h1>
+<!-- API Keys Section -->
+<section class="flex flex-col gap-4">
+<h2 class="text-xl font-bold text-[#2e303a] px-2">账户与安全</h2>
+<div class="bg-[#E8E9FF] rounded-[32px] overflow-hidden">
+<div class="p-5 flex items-center justify-between setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">key</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">API 密钥</p>
+<p class="text-sm text-[#747688] flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-green-600">lock</span>
+                            安全存储
+                        </p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Providers Section -->
+<section class="flex flex-col gap-4">
+<h2 class="text-xl font-bold text-[#2e303a] px-2">供应商管理</h2>
+<div class="bg-[#FFF0E6] rounded-[32px] overflow-hidden flex flex-col">
+<!-- LLM -->
+<div class="p-5 flex items-center justify-between border-b border-white/50 setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">psychology</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">LLM 模型供应商</p>
+<p class="text-sm text-[#747688] mt-0.5">DeepSeek</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+<!-- STT -->
+<div class="p-5 flex items-center justify-between border-b border-white/50 setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">graphic_eq</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">语音转文字 (STT) 供应商</p>
+<p class="text-sm text-[#747688] mt-0.5">Doubao ASR Flash</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+<!-- Dictionary -->
+<div class="p-5 flex items-center justify-between setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">词典</p>
+<p class="text-sm text-[#747688] mt-0.5">Free Dictionary API</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Download Section -->
+<section class="flex flex-col gap-4">
+<h2 class="text-xl font-bold text-[#2e303a] px-2">下载偏好</h2>
+<div class="bg-[#FFEAE6] rounded-[32px] overflow-hidden flex flex-col">
+<!-- Channel -->
+<div class="p-5 flex items-center justify-between border-b border-white/50 setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">cloud_download</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">首选通道</p>
+<p class="text-sm text-[#747688] mt-0.5">云端 (Cobalt)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+<!-- Cookies -->
+<div class="p-5 flex items-center justify-between setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">cookie</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">Cookie 管理</p>
+<p class="text-sm text-[#747688] mt-0.5">用于本地下载</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Appearance Section -->
+<section class="flex flex-col gap-4">
+<h2 class="text-xl font-bold text-[#2e303a] px-2">外观设置</h2>
+<div class="bg-[#E6F5EA] rounded-[32px] overflow-hidden flex flex-col">
+<!-- Theme -->
+<div class="p-5 flex items-center justify-between border-b border-white/50 setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">palette</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">主题模式</p>
+<p class="text-sm text-[#747688] mt-0.5">系统默认</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+<!-- Font Size -->
+<div class="p-5 flex items-center justify-between setting-card cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="bg-white shadow-sm w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[#2e303a]">text_fields</span>
+</div>
+<div>
+<p class="font-bold text-base text-[#2e303a]">字幕大小</p>
+<p class="text-sm text-[#747688] mt-0.5">中</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#747688] opacity-80">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white/95 backdrop-blur-lg rounded-full shadow-lg border border-[#f0e6d2] z-50 flex justify-around items-center h-16 px-2" data-purpose="bottom-nav">
+  <button class="flex flex-col items-center justify-center text-[#747688] px-4 py-1 hover:bg-gray-100 rounded-full transition-all">
+    <span class="material-symbols-outlined text-[22px] mb-0.5">smart_display</span>
+    <span class="text-[10px] font-bold">视频</span>
+  </button>
+  <button class="flex flex-col items-center justify-center text-[#747688] px-4 py-1 hover:bg-gray-100 rounded-full transition-all">
+    <span class="material-symbols-outlined text-[22px] mb-0.5">school</span>
+    <span class="text-[10px] font-bold">复习</span>
+  </button>
+  <button class="flex flex-col items-center justify-center bg-[#FDCF44] text-[#2e303a] rounded-full px-8 py-2.5 shadow-sm transition-all scale-105">
+    <span class="material-symbols-outlined text-[28px] mb-0.5" style="font-variation-settings: 'FILL' 1;">settings</span>
+    <span class="text-[10px] font-bold">设置</span>
+  </button>
+</nav>
+
+
+
+
+<div id="kiss-translator-box" class="notranslate"></div></body></html>

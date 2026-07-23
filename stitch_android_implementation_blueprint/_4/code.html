@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN" style=""><head><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"><link data-snapdom="injected-import" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><style data-emotion="css" data-s=""></style></head><body class="text-gray-800 min-h-screen relative pb-24 bg-[#fdfaf0]">
+<!-- BEGIN: Header -->
+<header class="pb-6 px-6 pt-12 flex flex-col items-center z-10" data-purpose="app-header">
+<div class="w-full flex justify-center mb-6">
+<span class="text-[32px] font-bold tracking-tight text-[#2e303a]" style="font-family: Inter, sans-serif;">SubLingo</span>
+</div>
+</header>
+<!-- BEGIN: Main Content -->
+<!-- BEGIN: Main Content -->
+<main class="px-5 space-y-10" data-purpose="main-content">
+<!-- BEGIN: New Learning Task Section -->
+<section data-purpose="new-task-section">
+<h2 class="text-xl font-bold mb-4 text-[#2e303a]">新学习任务</h2>
+<!-- Input Area -->
+<div class="relative flex items-center bg-[#8B6DF1] rounded-full p-2 shadow-sm" data-purpose="link-input-container">
+<div class="flex-1 bg-[#f0eaff] rounded-full flex items-center pl-6 pr-4 py-3 h-full">
+<input class="bg-transparent border-none focus:ring-0 w-full text-base placeholder-gray-500 py-0" placeholder="在此粘贴视频链接..." type="text">
+<svg class="w-5 h-5 text-gray-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<button class="bg-[#F8C62A] text-[#2e303a] font-bold text-base px-8 py-3.5 rounded-full ml-2 shadow-sm hover:bg-[#ebd251] transition-colors whitespace-nowrap" data-purpose="paste-button">
+          下载&nbsp;</button>
+</div>
+<!-- Supported Platforms -->
+<div class="flex items-center mt-5 text-sm text-[#2e303a] gap-3" data-purpose="supported-platforms">
+<span class="">支持平台：</span>
+<div class="flex gap-3">
+<!-- Platform Icons -->
+<div class="w-7 h-7 rounded-full bg-[#FFEAE6] flex items-center justify-center text-red-500"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></div>
+<div class="w-7 h-7 rounded-full bg-[#FFEAE6] flex items-center justify-center text-red-500"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M10.05 13.56c-.56.6-1.55.97-2.69.97-2.14 0-3.88-1.74-3.88-3.88s1.74-3.88 3.88-3.88c1.11 0 2.06.42 2.67 1.08l-1.07 1.13c-.4-.44-1-.7-1.6-.7-1.29 0-2.33 1.04-2.33 2.33s1.04 2.33 2.33 2.33c.83 0 1.54-.42 1.95-1.05h-1.95v-1.47h3.5v.35c0 1.76-1.39 3.19-3.1 3.19z"></path></svg></div>
+<div class="w-7 h-7 rounded-full bg-[#E8E9FF] flex items-center justify-center text-[#2e303a]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></div>
+<div class="w-7 h-7 rounded-full bg-[#FFF0E6] flex items-center justify-center text-[#E57B3E]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 11.779c0-1.459-1.192-2.645-2.657-2.645-.715 0-1.363.286-1.84.746-1.81-1.191-4.259-1.949-6.971-2.046l1.483-4.669 4.016.941-.006.058c0 1.193.975 2.163 2.174 2.163 1.198 0 2.172-.97 2.172-2.163s-.975-2.164-2.172-2.164c-.92 0-1.704.574-2.021 1.379l-4.329-1.015c-.189-.046-.381.063-.44.249l-1.654 5.207c-2.838.034-5.409.798-7.3 2.025-.474-.438-1.103-.712-1.799-.712-1.465 0-2.656 1.187-2.656 2.646 0 .97.533 1.811 1.317 2.271-.052.282-.086.567-.086.857 0 3.911 4.808 7.093 10.719 7.093s10.72-3.182 10.72-7.093c0-.274-.029-.544-.075-.81.832-.447 1.405-1.312 1.405-2.318zm-17.224 1.816c0-.868.71-1.575 1.582-1.575.872 0 1.581.707 1.581 1.575s-.709 1.574-1.581 1.574-1.582-.706-1.582-1.574zm9.061 4.669c-1.797 1.799-4.856 1.835-4.887 1.835-1.968-.031-4.823-1.835-4.887-1.835-.195-.195-.195-.511 0-.706.195-.195.511-.195.706 0 .025.025 2.502 1.626 4.181 1.636 1.639-.01 4.148-1.636 4.181-1.636.195-.195.511-.195.706 0 .195.195.195.511 0 .706zm-1.383-3.095c-.872 0-1.581-.706-1.581-1.574 0-.868.709-1.575 1.581-1.575s1.581.707 1.581 1.575c0 .868-.709 1.574-1.581 1.574z"></path></svg></div>
+</div>
+</div>
+</section>
+<!-- END: New Learning Task Section -->
+<!-- BEGIN: Processing Section -->
+<section data-purpose="processing-section">
+<div class="flex items-center gap-3 mb-4">
+<h2 class="text-xl font-bold text-[#2e303a]">正在处理</h2>
+<span class="bg-[#E9E1D2] text-[#8C7D68] text-sm px-3 py-1 rounded-full font-medium">2 处理中</span>
+</div>
+<div class="space-y-4">
+<!-- Task 1: Pastel Pink -->
+<div class="bg-[#FFC6DA] rounded-[32px] p-6 relative overflow-hidden shadow-soft" data-purpose="processing-card">
+<div class="pr-10">
+<h3 class="font-bold text-lg text-[#2e303a] truncate mb-2">Advanced English Expressio...</h3>
+<p class="text-sm text-[#434656] mb-5">正在下载视频... 65%</p>
+</div>
+<!-- Progress Bar -->
+<div class="h-2.5 w-full bg-white/50 rounded-full overflow-hidden">
+<div class="h-full bg-[#A57887] rounded-full" style="width: 65%;"></div>
+</div>
+<!-- Close Icon -->
+<button class="absolute top-6 right-6 text-[#434656] hover:text-[#2e303a]">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Task 2: Soft Orange -->
+<div class="bg-[#FFCDA5] rounded-[32px] p-6 relative overflow-hidden shadow-soft" data-purpose="processing-card">
+<div class="pr-10">
+<h3 class="font-bold text-lg text-[#2e303a] truncate mb-2">TED Talk: The power of...</h3>
+<p class="text-sm text-[#434656] mb-5">正在使用豆包 ASR 转录...</p>
+</div>
+<!-- Progress Bar -->
+<div class="h-2.5 w-full bg-white/50 rounded-full overflow-hidden">
+<div class="h-full bg-[#A87E5E] rounded-full" style="width: 80%;"></div>
+</div>
+<!-- Close Icon -->
+<button class="absolute top-6 right-6 text-[#434656] hover:text-[#2e303a]">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</section>
+<!-- END: Processing Section -->
+<!-- BEGIN: Recent Videos Section -->
+<section data-purpose="recent-videos-section">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-xl font-bold text-[#2e303a]">最近视频</h2>
+<a class="text-sm text-[#747688] hover:text-[#2e303a]" href="#">查看全部</a>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Video Card 1 -->
+<div class="bg-white rounded-[32px] p-2 shadow-soft" data-purpose="video-card">
+<div class="relative rounded-[24px] overflow-hidden mb-3 aspect-[4/3] bg-gray-100">
+<img alt="Mastering English Intonation" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDtMuHA9AAQgBie6kH3EBwJRcCg-CoQhow4q6Z8hka-IOLmkBVof1snG-W0mc8gM8awsDdhGAL1t6EvH4Zww-plk2TxcdR1kybKOMvkoYF1aGlxymwECWOZzeo48Rh6fF_B7B0Zbd8xvFglSVIOPPqPTTja_nV4jP5j25g2dQd_nQURAC3ONhmqGnW56-j-2Ik3tq0lMnimoL6VDvsK9losC7NA2SPlH3utHhgB1YbeCy63tZ5RrGO">
+<!-- Ready Badge -->
+<div class="absolute top-2 right-2 bg-[#A0E2B8] text-[#191b24] text-[10px] font-bold px-2 py-1 rounded-full">
+              已就绪
+            </div>
+</div>
+<div class="px-2 pb-2">
+<h3 class="font-bold text-sm text-[#2e303a] leading-snug mb-1 line-clamp-2">Mastering English Intonation and Rhythm in 10 Minutes</h3>
+<p class="text-xs text-[#747688]">124 生词</p>
+</div>
+</div>
+<!-- Video Card 2 -->
+<div class="bg-white rounded-[32px] p-2 shadow-soft" data-purpose="video-card">
+<div class="relative rounded-[24px] overflow-hidden mb-3 aspect-[4/3] bg-gray-100">
+<img alt="Real-life Cafe Conversations" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqSFPFVMRTFmO_LtmgROtZA-oUJ6WbSdEY28jgcv3PdivOp7Kll3pL8UukosfwjJVLL6lGRlZtE-iVXlfc3Rzds_SSYH7kgcfF3xtj7YUyQ3fjqaQqXFXTmUW2CJyd3xbxrQcXTWN4xew2KHMSN4VzsdAWf5ALabUAOpccgpSwhXh0Q4ZSgsLm3Nz6-W0VcYeKz7N7vCJzWVK8h_OA1SIwOwIQgTNXOhmtj7a8xZk_mM3gTYzT1cMG">
+<!-- Ready Badge -->
+<div class="absolute top-2 right-2 bg-[#A0E2B8] text-[#191b24] text-[10px] font-bold px-2 py-1 rounded-full">
+              已就绪
+            </div>
+</div>
+<div class="px-2 pb-2">
+<h3 class="font-bold text-sm text-[#2e303a] leading-snug mb-1 line-clamp-2">Real-life Cafe Conversations: Ordering like a Native</h3>
+<p class="text-xs text-[#747688]">45 生词</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Recent Videos Section -->
+</main>
+<!-- BEGIN: Floating Action Button -->
+<!-- BEGIN: Floating Action Button -->
+
+<!-- BEGIN: Bottom Navigation -->
+<!-- BEGIN: Bottom Navigation -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white/95 backdrop-blur-lg rounded-full shadow-lg border border-[#f0e6d2] z-50 flex justify-around items-center h-16 px-2" data-purpose="bottom-nav">
+<button class="flex flex-col items-center justify-center bg-[#FDCF44] text-[#2e303a] rounded-full px-8 py-2.5 shadow-sm transition-all scale-105">
+<span class="material-symbols-outlined text-[28px] mb-0.5" style="font-variation-settings: &quot;FILL&quot; 1;">smart_display</span>
+<span class="text-[10px] font-bold">视频</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#747688] px-4 py-1 hover:bg-gray-100 rounded-full transition-all">
+<span class="material-symbols-outlined text-[22px] mb-0.5">school</span>
+<span class="text-[10px] font-bold">复习</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#747688] px-4 py-1 hover:bg-gray-100 rounded-full transition-all">
+<span class="material-symbols-outlined text-[22px] mb-0.5">settings</span>
+<span class="text-[10px] font-bold">设置</span>
+</button>
+</nav>
+
+
+<div id="kiss-translator-box" class="notranslate"></div></body></html>

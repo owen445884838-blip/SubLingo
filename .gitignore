@@ -1,0 +1,41 @@
+# Android / Gradle build output
+.gradle/
+.gradle-user/
+build/
+**/build/
+
+# Local SDK and machine-specific configuration
+local.properties
+*.local
+
+# Android Studio / IntelliJ local state
+.idea/
+*.iml
+
+# Signing credentials
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+
+# Native and external build caches
+.externalNativeBuild/
+.cxx/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Temporary files and logs
+*.log
+*.tmp
+*.temp
+captures/
+
+# Packaged release artifacts are published separately, not tracked in Git
+*.apk
+*.aab
+*.apks
+*.idsig
