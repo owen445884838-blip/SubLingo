@@ -4,6 +4,12 @@
 > Purpose: give any new agent a fast snapshot of the current implementation state.
 > Status precedence: the 2026-07-23 M5 acceptance, latest product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
 
+## GitHub prerelease and project presentation (2026-07-23)
+
+- The OPPO PHY110-validated Release candidate APK is published as the `v0.1.0-alpha.1` GitHub prerelease asset. It remains validation-signed with the Android debug certificate and is explicitly not a production/store signing artifact.
+- Four real-device screenshots from OPPO PHY110 are tracked under `docs/screenshots/` and displayed in `README.md`: Home, Review, bilingual playback/transcript, and Settings. Screenshots expose no plaintext API key, Cookie, signing material, or private account identifier.
+- Branch: `docs/add-release-and-screenshots`. Validation for the documentation change consists of image inspection, `git diff --check`, APK SHA-256 verification, and GitHub Release/README rendering checks.
+
 ## M5 engineering completion and Release acceptance (2026-07-23)
 
 ### Status
