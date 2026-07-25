@@ -12,7 +12,7 @@
 - Automated validation with Android Studio JBR 17: focused vocabulary/dictionary/review tests plus `compileDebugKotlin` passed; the complete `:app:testDebugUnitTest :app:assembleDebug` gate passed with 126 tests, 0 failures, and 0 errors across 32 suites; `:app:lintDebug` passed; `git diff --check` passed.
 - Real-device validation: the Debug APK was installed in place on OPPO PHY110 (`9b43a22c`) with app data retained. Opening Review ran the repair successfully: persisted `consensu` became `consensus` with phonetic and bundled Chinese sense, `collectively` received `集体地；聚集地；共同地`, and `PRAGMA foreign_key_check` returned no violations. Home and Review rendered normally, and inspected Logcat contained no app fatal, Room, or SQLite error.
 - Known limitation: derived Chinese definitions currently cover regular `-ly` adverbs when a bundled base-form entry exists. Other missing dictionary forms remain `释义待补全` unless contextual Chinese is available or a provider supplies a Chinese sense.
-- Branch: `fix/review-vocabulary-corrections`; implementation commit `88ca540` is pushed to `origin`. Pull Request creation remains pending because the local GitHub CLI has no authenticated session.
+- Branch: `fix/review-vocabulary-corrections`; implementation commit `88ca540` is pushed to `origin`. Pull Request: https://github.com/owen445884838-blip/SubLingo/pull/3.
 
 ## GitHub prerelease and project presentation (2026-07-23)
 
