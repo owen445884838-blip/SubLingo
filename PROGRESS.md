@@ -1,8 +1,18 @@
 # SubLingo Progress
 
-> Last updated: 2026-07-23
+> Last updated: 2026-07-25
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-23 M5 acceptance, latest product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-07-25 player/transcript fixes, the 2026-07-23 M5 acceptance and latest product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Player gesture, progress handoff, and bilingual mapping fixes (2026-07-25)
+
+- Double-tap rewind, play/pause, and fast-forward actions in both the immersive and transcript players no longer make player controls visible. Single taps and direct control interactions retain the existing control visibility and timeout behavior.
+- Returning from the transcript by downward gesture, header back, or Android system back now publishes the live Media3 position through a video-scoped, one-shot handoff before the immersive player resumes. Room persistence remains the durable source of truth, while the handoff prevents stale `rememberSaveable` state or an asynchronous database update from restoring the pre-transcript position.
+- Transcript display repair now rejects disjoint Chinese regions attached to one English occurrence and retains the most informative contiguous region. Adjacent fragments that form one semantic mapping, such as `did not -> 没 + 有`, remain supported. This repairs existing persisted transcripts at display time without schema changes, retranscription, retranslation, or database deletion.
+- Affected modules: shared video gesture helpers, immersive player UI, transcript player UI/ViewModel, and focused unit tests. Persisted-data changes: none; Room remains at schema 13.
+- Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:assembleDebug` passed with 125 tests, 0 failures, and 0 errors; `:app:lintDebug` passed; `git diff --check` passed. The Debug APK is `app/build/outputs/apk/debug/app-debug.apk` and remains untracked.
+- Device validation was not run because no Android device or emulator was connected. Manual gesture, return-transition, and screenshot-specific transcript verification remain required on a device before merge.
+- Branch: `feature/player-transcript-fixes`. Implementation commit: `d6e3d2d`. The branch is pushed to `origin`; the GitHub PR form is prepared at `https://github.com/owen445884838-blip/SubLingo/pull/new/feature/player-transcript-fixes` but has not been submitted.
 
 ## GitHub prerelease and project presentation (2026-07-23)
 

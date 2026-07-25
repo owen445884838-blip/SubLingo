@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Player double-tap rewind, play/pause, and fast-forward gestures no longer reveal playback controls.
+- Immersive and transcript players now hand off the live playback position in both directions.
+- Bilingual transcript highlighting no longer maps one English phrase to unrelated, disjoint Chinese regions.
+
 ## 0.1.0-alpha.1 — 2026-07-23
 
 - First end-to-end SubLingo prerelease candidate.
