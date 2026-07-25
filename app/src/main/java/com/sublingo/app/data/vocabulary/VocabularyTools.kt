@@ -300,12 +300,32 @@ object VocabularyPreprocessor {
 
     fun normalize(value: String): String = value.lowercase(Locale.US).trim('\'', '-').let { raw ->
         when {
+            shouldPreserveTrailingS(raw) -> raw
             raw.endsWith("ies") && raw.length > 4 -> raw.dropLast(3) + "y"
             raw.endsWith("ing") && raw.length > 5 -> raw.dropLast(3)
             raw.endsWith("ed") && raw.length > 4 -> raw.dropLast(2)
             raw.endsWith("s") && !raw.endsWith("ss") && raw.length > 3 -> raw.dropLast(1)
             else -> raw
         }
+    }
+
+    private fun shouldPreserveTrailingS(word: String): Boolean =
+        word in setOf("news", "series", "species") ||
+            listOf("us", "is", "ss", "ous", "ics").any(word::endsWith)
+}
+
+object VocabularyLemmaRepairPolicy {
+    fun correctedLegacyLemma(lemma: String, surfaceForms: Collection<String>): String? {
+        val normalizedLemma = lemma.lowercase(Locale.US).trim()
+        return surfaceForms.asSequence()
+            .map { it.lowercase(Locale.US).trim('\'', '-') }
+            .filter { surface ->
+                surface.length > normalizedLemma.length &&
+                    surface.dropLast(1) == normalizedLemma &&
+                    VocabularyPreprocessor.normalize(surface) == surface
+            }
+            .distinct()
+            .singleOrNull()
     }
 }
 

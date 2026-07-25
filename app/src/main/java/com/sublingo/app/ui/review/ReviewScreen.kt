@@ -682,8 +682,9 @@ private fun CardBack(card: ReviewStudyCardRow, onOpenSource: (String, Long) -> U
                 Box(contentAlignment = Alignment.Center) { Text("♪", color = Green, fontWeight = FontWeight.Black, fontSize = 16.sp) }
             }
         }
+        val displayedDefinition = reviewDefinitionZh(card)
         Text(
-            formatDefinitionForReading(card.definitionZh ?: card.definitionEn ?: "释义待补全"),
+            formatDefinitionForReading(displayedDefinition),
             Modifier.fillMaxWidth().padding(top = 20.dp),
             color = Ink,
             fontSize = 20.sp,
@@ -692,7 +693,7 @@ private fun CardBack(card: ReviewStudyCardRow, onOpenSource: (String, Long) -> U
             fontWeight = FontWeight.Bold,
         )
         contextualMeaningZh
-            ?.takeIf { contextual -> contextual.isNotBlank() && !card.definitionZh.orEmpty().contains(contextual) }
+            ?.takeIf { contextual -> contextual.isNotBlank() && !displayedDefinition.contains(contextual) }
             ?.let { contextual ->
                 Surface(color = Color(0xFFFFF4D7), shape = RoundedCornerShape(999.dp), modifier = Modifier.padding(top = 13.dp)) {
                     Text("本句：$contextual", Modifier.padding(horizontal = 15.dp, vertical = 7.dp), color = Color(0xFF8A5B00), fontWeight = FontWeight.Bold)
@@ -776,6 +777,11 @@ internal fun formatDefinitionForReading(definition: String): String = definition
     .map(String::trim)
     .filter(String::isNotBlank)
     .joinToString("\n")
+
+internal fun reviewDefinitionZh(card: ReviewStudyCardRow): String =
+    card.definitionZh?.trim()?.takeIf(String::isNotEmpty)
+        ?: card.contextualMeaningZh?.trim()?.takeIf(String::isNotEmpty)
+        ?: "释义待补全"
 
 @Composable
 private fun RoundAction(label: String, border: Color, size: androidx.compose.ui.unit.Dp, enabled: Boolean = true, contentColor: Color = border, onClick: () -> Unit) {
@@ -954,9 +960,10 @@ private fun WordListCard(card: ReviewStudyCardRow, selected: Boolean = false, on
                     Text(card.lemma, color = Ink, fontSize = 22.sp, fontWeight = FontWeight.Black)
                     card.phonetic?.let { Text(it, color = Muted, fontSize = 13.sp) }
                 }
-                Text(card.definitionZh ?: card.definitionEn ?: "释义待补全", Modifier.padding(top = 7.dp), color = Muted, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                val displayedDefinition = reviewDefinitionZh(card)
+                Text(displayedDefinition, Modifier.padding(top = 7.dp), color = Muted, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 card.contextualMeaningZh
-                    ?.takeIf { it.isNotBlank() && !card.definitionZh.orEmpty().contains(it) }
+                    ?.takeIf { it.isNotBlank() && !displayedDefinition.contains(it) }
                     ?.let { Text("本句：$it", Modifier.padding(top = 4.dp), color = Color(0xFF8A5B00), fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             }
             Column(horizontalAlignment = Alignment.End) {
@@ -982,9 +989,10 @@ private fun WordGridCard(card: ReviewStudyCardRow, selected: Boolean = false, on
             Column {
                 Text(card.lemma, color = Ink, fontSize = 21.sp, fontWeight = FontWeight.Black, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 card.phonetic?.let { Text(it, Modifier.padding(top = 5.dp), color = Muted, fontSize = 12.sp) }
-                Text(card.definitionZh ?: card.definitionEn ?: "释义待补全", Modifier.padding(top = 12.dp), color = Ink, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                val displayedDefinition = reviewDefinitionZh(card)
+                Text(displayedDefinition, Modifier.padding(top = 12.dp), color = Ink, maxLines = 3, overflow = TextOverflow.Ellipsis)
                 card.contextualMeaningZh
-                    ?.takeIf { it.isNotBlank() && !card.definitionZh.orEmpty().contains(it) }
+                    ?.takeIf { it.isNotBlank() && !displayedDefinition.contains(it) }
                     ?.let { Text("本句：$it", Modifier.padding(top = 5.dp), color = Color(0xFF8A5B00), fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis) }
             }
             Text(dueLabel(card), color = if (card.dueAt <= System.currentTimeMillis()) Red else Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold)

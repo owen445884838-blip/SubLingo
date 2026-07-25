@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Preserve singular vocabulary lemmas such as `consensus` instead of truncating their final `s`, and repair previously affected review data in place.
+- Derive Chinese definitions for supported adverbs from bundled base-form entries and prevent English-only definitions from appearing in the Chinese review-card field.
+
 ## 0.1.0-alpha.1 — 2026-07-23
 
 - First end-to-end SubLingo prerelease candidate.

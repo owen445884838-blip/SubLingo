@@ -105,6 +105,21 @@ class VocabularyToolsTest {
         assertEquals(2, candidates.first { it.normalized == "reliable" }.frequency)
     }
 
+    @Test fun singularWordsEndingInSAreNotTruncated() {
+        assertEquals("consensus", VocabularyPreprocessor.normalize("consensus"))
+        assertEquals("analysis", VocabularyPreprocessor.normalize("analysis"))
+        assertEquals("status", VocabularyPreprocessor.normalize("status"))
+        assertEquals("news", VocabularyPreprocessor.normalize("news"))
+    }
+
+    @Test fun legacyTrailingSCorruptionCanBeRepairedFromThePersistedSurface() {
+        assertEquals(
+            "consensus",
+            VocabularyLemmaRepairPolicy.correctedLegacyLemma("consensu", listOf("consensus")),
+        )
+        assertEquals(null, VocabularyLemmaRepairPolicy.correctedLegacyLemma("application", listOf("applications")))
+    }
+
     @Test fun selectionCreatesOneLemmaFromDuplicateSuggestions() {
         val candidates = listOf(VocabularyCandidate("applications", "application", "c1", 2))
         val result = VocabularySelection.sanitize(

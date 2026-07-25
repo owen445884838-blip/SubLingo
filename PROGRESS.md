@@ -1,8 +1,18 @@
 # SubLingo Progress
 
-> Last updated: 2026-07-23
+> Last updated: 2026-07-25
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-23 M5 acceptance, latest product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-07-25 review-vocabulary fix, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Review vocabulary correction and Chinese definitions (2026-07-25)
+
+- Fixed the local fallback lemmatizer so singular words with lexical `s` endings, including `consensus`, `analysis`, `status`, and `news`, are not truncated. Existing malformed lexemes are repaired in place from their persisted occurrence surface forms, preserving lexeme IDs, review cards, favorites, occurrences, and review history; a normalized-lemma collision is skipped rather than merged unsafely.
+- Standard dictionary lookup now derives supported adverbs from bundled base forms before remote fallback. For example, `collectively` resolves through `collective` and receives a Chinese adverb definition. Review cards and word-book views no longer display an English definition as a Chinese fallback; they prefer a standard Chinese definition, then the contextual Chinese meaning, then `释义待补全`.
+- Affected modules: vocabulary normalization/legacy repair, vocabulary DAO queries, bundled dictionary fallback, standard-sense repair, review UI, and focused unit tests. There is no Room schema or persisted-data format change and no migration is required.
+- Automated validation with Android Studio JBR 17: focused vocabulary/dictionary/review tests plus `compileDebugKotlin` passed; the complete `:app:testDebugUnitTest :app:assembleDebug` gate passed with 126 tests, 0 failures, and 0 errors across 32 suites; `:app:lintDebug` passed; `git diff --check` passed.
+- Real-device validation: the Debug APK was installed in place on OPPO PHY110 (`9b43a22c`) with app data retained. Opening Review ran the repair successfully: persisted `consensu` became `consensus` with phonetic and bundled Chinese sense, `collectively` received `集体地；聚集地；共同地`, and `PRAGMA foreign_key_check` returned no violations. Home and Review rendered normally, and inspected Logcat contained no app fatal, Room, or SQLite error.
+- Known limitation: derived Chinese definitions currently cover regular `-ly` adverbs when a bundled base-form entry exists. Other missing dictionary forms remain `释义待补全` unless contextual Chinese is available or a provider supplies a Chinese sense.
+- Branch: `fix/review-vocabulary-corrections`. Pull Request pending branch push.
 
 ## GitHub prerelease and project presentation (2026-07-23)
 
