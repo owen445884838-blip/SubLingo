@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Restore silent-e and other inflected vocabulary forms against the bundled dictionary, repair affected existing review cards such as `eliminat`, and make review-card transitions advance before rating persistence completes.
 - Preserve singular vocabulary lemmas such as `consensus` instead of truncating their final `s`, and repair previously affected review data in place.
 - Derive Chinese definitions for supported adverbs from bundled base-form entries and prevent English-only definitions from appearing in the Chinese review-card field.
 - Player double-tap rewind, play/pause, and fast-forward gestures no longer reveal playback controls.

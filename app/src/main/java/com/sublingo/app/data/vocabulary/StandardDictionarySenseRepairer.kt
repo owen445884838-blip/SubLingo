@@ -34,10 +34,11 @@ class StandardDictionarySenseRepairer @Inject constructor(
     private suspend fun repairLegacyLemmas(): Int {
         var repaired = 0
         vocabularyDao.lexemesWithOccurrences().forEach { lexeme ->
-            val corrected = VocabularyLemmaRepairPolicy.correctedLegacyLemma(
+            val corrected = VocabularyLemmaRepairPolicy.correctionCandidates(
                 lemma = lexeme.lemma,
                 surfaceForms = vocabularyDao.surfaceFormsForLexeme(lexeme.id),
-            ) ?: return@forEach
+            ).firstOrNull { candidate -> dictionary.lookup(candidate, allowRemote = false) != null }
+                ?: return@forEach
             val collision = vocabularyDao.findLexeme(lexeme.language, corrected)
             if (collision != null && collision.id != lexeme.id) return@forEach
             vocabularyDao.updateLexeme(

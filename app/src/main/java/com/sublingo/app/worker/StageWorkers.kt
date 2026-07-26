@@ -48,6 +48,7 @@ import com.sublingo.app.data.vocabulary.ContextualChineseMeaningResolver
 import com.sublingo.app.data.vocabulary.PhraseAuditPlanner
 import com.sublingo.app.data.vocabulary.LlmJsonResponseParser
 import com.sublingo.app.data.vocabulary.StandardDictionarySenseRepairer
+import com.sublingo.app.data.vocabulary.VocabularyLemmaRepairPolicy
 import com.sublingo.app.data.vocabulary.VocabularyDifficulty
 import com.sublingo.app.data.vocabulary.VocabularyDifficultyClassifier
 import com.sublingo.app.data.storage.AppStorageCleaner
@@ -1240,25 +1241,37 @@ class VocabWorker @AssistedInject constructor(
         }
     }
 
-    private fun localVocabulary(
+    private suspend fun localVocabulary(
         candidates: List<com.sublingo.app.data.vocabulary.VocabularyCandidate>,
         englishCues: List<SubtitleCueEntity>,
-    ): List<SelectedVocabulary> = candidates.flatMap { candidate ->
-        englishCues.mapNotNull { cue ->
-            Regex("[A-Za-z][A-Za-z'-]{1,}").findAll(cue.text)
-                .firstOrNull { match -> VocabularyPreprocessor.normalize(match.value) == candidate.normalized }
-                ?.let { match ->
-                    SelectedVocabulary(
-                        match.value,
-                        candidate.normalized,
-                        cue.id,
-                        itemType = VocabularyItemType.WORD,
-                        difficultyLevel = VocabularyDifficultyClassifier.classify(match.value, candidate.normalized),
-                        difficultySource = "LOCAL",
-                        difficultyConfidence = .65f,
-                    )
-                }
+    ): List<SelectedVocabulary> = buildList {
+        candidates.forEach { candidate ->
+            val lemma = resolveDictionaryLemma(candidate.surfaceForm, candidate.normalized)
+            englishCues.forEach { cue ->
+                Regex("[A-Za-z][A-Za-z'-]{1,}").findAll(cue.text)
+                    .firstOrNull { match -> VocabularyPreprocessor.normalize(match.value) == candidate.normalized }
+                    ?.let { match ->
+                        add(
+                            SelectedVocabulary(
+                                match.value,
+                                lemma,
+                                cue.id,
+                                itemType = VocabularyItemType.WORD,
+                                difficultyLevel = VocabularyDifficultyClassifier.classify(match.value, lemma),
+                                difficultySource = "LOCAL",
+                                difficultyConfidence = .65f,
+                            ),
+                        )
+                    }
+            }
         }
+    }
+
+    private suspend fun resolveDictionaryLemma(surfaceForm: String, fallback: String): String {
+        VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates(surfaceForm).forEach { candidate ->
+            if (dictionary.lookup(candidate, allowRemote = false) != null) return candidate
+        }
+        return fallback
     }
 
     private companion object {

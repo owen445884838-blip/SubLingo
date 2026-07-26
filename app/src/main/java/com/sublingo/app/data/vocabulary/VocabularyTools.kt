@@ -301,6 +301,8 @@ object VocabularyPreprocessor {
     fun normalize(value: String): String = value.lowercase(Locale.US).trim('\'', '-').let { raw ->
         when {
             shouldPreserveTrailingS(raw) -> raw
+            raw.endsWith("ated") && raw.length > 5 -> raw.dropLast(1)
+            raw.endsWith("ied") && raw.length > 4 -> raw.dropLast(3) + "y"
             raw.endsWith("ies") && raw.length > 4 -> raw.dropLast(3) + "y"
             raw.endsWith("ing") && raw.length > 5 -> raw.dropLast(3)
             raw.endsWith("ed") && raw.length > 4 -> raw.dropLast(2)
@@ -315,6 +317,78 @@ object VocabularyPreprocessor {
 }
 
 object VocabularyLemmaRepairPolicy {
+    private val irregularForms = mapOf(
+        "brought" to "bring",
+        "bought" to "buy",
+        "came" to "come",
+        "coming" to "come",
+        "done" to "do",
+        "gave" to "give",
+        "given" to "give",
+        "gone" to "go",
+        "made" to "make",
+        "making" to "make",
+        "ran" to "run",
+        "running" to "run",
+        "said" to "say",
+        "saw" to "see",
+        "seen" to "see",
+        "singing" to "sing",
+        "taken" to "take",
+        "took" to "take",
+        "went" to "go",
+        "written" to "write",
+        "wrote" to "write",
+    )
+
+    /**
+     * Ordered dictionary-form candidates for a subtitle surface. The bundled dictionary decides
+     * between ambiguous spellings; this method only supplies morphologically plausible options.
+     */
+    fun dictionaryLemmaCandidates(surfaceForm: String): List<String> {
+        val surface = surfaceForm.lowercase(Locale.US).trim('\'', '-')
+        if (surface.isBlank() || surface.any { !it.isLetter() && it != '\'' && it != '-' }) return emptyList()
+        return buildList {
+            irregularForms[surface]?.let(::add)
+            when {
+                surface.endsWith("ied") && surface.length > 4 -> add(surface.dropLast(3) + "y")
+                surface.endsWith("ing") && surface.length > 5 -> {
+                    val stem = surface.dropLast(3)
+                    if (stem.length >= 2 && stem.last() == stem[stem.lastIndex - 1]) add(stem.dropLast(1))
+                    add(stem + "e")
+                    add(stem)
+                }
+                surface.endsWith("ed") && surface.length > 4 -> {
+                    val stem = surface.dropLast(2)
+                    // Dropping only the final d restores a silent e: eliminated -> eliminate.
+                    add(surface.dropLast(1))
+                    if (stem.length >= 2 && stem.last() == stem[stem.lastIndex - 1]) add(stem.dropLast(1))
+                    add(stem)
+                }
+                surface.endsWith("ies") && surface.length > 4 -> add(surface.dropLast(3) + "y")
+                surface.endsWith("es") && surface.length > 4 -> {
+                    add(surface.dropLast(1))
+                    add(surface.dropLast(2))
+                }
+                surface.endsWith("s") && surface.length > 3 -> add(surface.dropLast(1))
+            }
+            add(VocabularyPreprocessor.normalize(surface))
+            add(surface)
+        }.filter { it.length >= 2 }.distinct()
+    }
+
+    fun correctionCandidates(lemma: String, surfaceForms: Collection<String>): List<String> {
+        val normalizedLemma = lemma.lowercase(Locale.US).trim()
+        return buildList {
+            correctedLegacyLemma(normalizedLemma, surfaceForms)?.let(::add)
+            surfaceForms.forEach { surface ->
+                val candidates = dictionaryLemmaCandidates(surface)
+                val currentIndex = candidates.indexOf(normalizedLemma)
+                if (currentIndex > 0) addAll(candidates.take(currentIndex))
+            }
+        }.distinct()
+    }
+
     fun correctedLegacyLemma(lemma: String, surfaceForms: Collection<String>): String? {
         val normalizedLemma = lemma.lowercase(Locale.US).trim()
         return surfaceForms.asSequence()
@@ -360,13 +434,18 @@ object VocabularySelection {
                 item.copy(
                     lemma = lemma,
                     sourceCueId = item.sourceCueId.takeIf(validCueIds::contains)
-                        ?: if (englishByCueId.isEmpty()) candidateCueIds[lemma].orEmpty() else "",
+                        ?: if (englishByCueId.isEmpty()) {
+                            candidateCueIds[VocabularyPreprocessor.normalize(item.surfaceForm)].orEmpty()
+                        } else "",
                 )
             }
             .filter { item ->
                 val words = item.surfaceForm.trim().split(Regex("\\s+"))
                 val validShape = when (item.itemType) {
-                    VocabularyItemType.WORD -> words.size == 1 && item.lemma in candidateCueIds
+                    VocabularyItemType.WORD -> words.size == 1 &&
+                        ' ' !in item.lemma &&
+                        VocabularyPreprocessor.normalize(item.surfaceForm) in candidateCueIds &&
+                        item.lemma in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates(item.surfaceForm)
                     else -> words.size >= 2 && words.any { VocabularyPreprocessor.normalize(it) in candidateCueIds }
                 }
                 val english = englishByCueId[item.sourceCueId]

@@ -112,6 +112,31 @@ class VocabularyToolsTest {
         assertEquals("news", VocabularyPreprocessor.normalize("news"))
     }
 
+    @Test fun silentEAndRegularInflectionsOfferCorrectDictionaryLemmas() {
+        assertEquals("eliminate", VocabularyPreprocessor.normalize("eliminated"))
+        assertEquals("eliminate", VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("eliminated").first())
+        assertTrue("write" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("writing"))
+        assertTrue("run" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("running"))
+        assertTrue("work" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("worked"))
+        assertTrue("study" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("studied"))
+    }
+
+    @Test fun legacyEdCorruptionOffersDictionaryValidatedRepairCandidate() {
+        assertEquals(
+            "eliminate",
+            VocabularyLemmaRepairPolicy.correctionCandidates("eliminat", listOf("eliminated")).first(),
+        )
+        assertEquals(
+            listOf("subscribe"),
+            VocabularyLemmaRepairPolicy.correctionCandidates("subscrib", listOf("subscribed")),
+        )
+        assertEquals(
+            listOf("write"),
+            VocabularyLemmaRepairPolicy.correctionCandidates("writ", listOf("writing")),
+        )
+        assertTrue(VocabularyLemmaRepairPolicy.correctionCandidates("application", listOf("applications")).isEmpty())
+    }
+
     @Test fun legacyTrailingSCorruptionCanBeRepairedFromThePersistedSurface() {
         assertEquals(
             "consensus",
@@ -131,6 +156,17 @@ class VocabularyToolsTest {
         )
         assertEquals(1, result.size)
         assertEquals("application", result.single().lemma)
+    }
+
+    @Test fun selectionAcceptsCorrectLemmaWhenLocalStemDiffers() {
+        val candidates = listOf(VocabularyCandidate("writing", "writ", "c1", 1))
+        val result = VocabularySelection.sanitize(
+            listOf(SelectedVocabulary("writing", "write", "c1")),
+            candidates,
+            englishByCueId = mapOf("c1" to "She is writing clearly."),
+        )
+
+        assertEquals("write", result.single().lemma)
     }
 
     @Test fun invalidCueAndUnknownCandidateAreRejected() {

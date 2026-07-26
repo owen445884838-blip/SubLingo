@@ -1,8 +1,18 @@
 # SubLingo Progress
 
-> Last updated: 2026-07-25
+> Last updated: 2026-07-26
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Review lemma repair and card-switch performance (2026-07-26)
+
+- Fixed the reported `eliminated -> eliminat` failure at its source. Vocabulary validation now associates a model lemma with the exact subtitle surface occurrence instead of requiring it to equal the local fallback stem, and local fallback extraction generates ordered inflection candidates that the bundled/offline dictionary verifies. Silent-e, `-ied`, doubled-consonant, plural, and common irregular candidates are covered without adding a dependency.
+- Existing malformed lexemes are repaired in place from their persisted occurrence surfaces when a higher-priority candidate exists in the local dictionary. The OPPO dataset's `eliminat` row became `eliminate` while retaining its lexeme ID, occurrence, review card, favorite/review state, and receiving the bundled phonetic and Chinese sense. A correction is skipped when the target normalized lemma already belongs to another lexeme, because merging two cards and their review histories is not yet defined safely; the existing `subscrib`/`subscribe` collision remains subject to that limitation.
+- Review rating now advances the in-memory session immediately after the outgoing card animation and persists the rating transaction in the background. Failure restores the card and cancellation is rethrown. Card/context projection and aggregate review-state calculation run on `Dispatchers.Default`, so Room invalidation and full-list/statistics recomputation no longer compete with Compose drawing on the main thread. The already pre-composed next card remains the visual handoff target.
+- Affected modules: vocabulary preprocessing/selection, local vocabulary fallback, legacy standard-sense repair, review repository/ViewModel, focused tests, changelog, and progress notes. Persisted-data format and Room schema remain unchanged at version 13; only validated lemma/sense rows and normal review actions are updated.
+- Automated validation with Android Studio JBR 17: focused vocabulary tests and Debug Kotlin compilation passed; the complete `:app:testDebugUnitTest :app:lintDebug :app:assembleDebug` gate passed with 133 tests, 0 failures, and 0 errors across 32 suites; `git diff --check` passed.
+- Real-device validation: the final Debug APK (`SHA-256 0157ae9f0c3db505a79d3f557f0cc64c57971ec86d0f4429dd9d64af8ea1aeca`) was installed in place on OPPO PHY110 (`9b43a22c`, API 36) with app data retained. Searching `eliminat` in the word book returned `eliminate`, phonetic `i'limineit`, and the bundled Chinese verb definition. Five consecutive `GOOD` transitions advanced the visible counter from `0 / 25` to `5 / 25`; the sampled 445 frames contained 9 janky frames (2.02%), with 90th/95th/99th-percentile frame times of 9/12/18 ms. These five validation ratings were persisted to the device's review history. App-specific Logcat inspection found no fatal, ANR, Room, or SQLite error.
+- Branch: `fix/review-lemma-card-switch`.
 
 ## Bilingual transcript mapping correction (2026-07-26)
 
