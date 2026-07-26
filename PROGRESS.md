@@ -2,7 +2,15 @@
 
 > Last updated: 2026-07-25
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-25 review-vocabulary fix, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Combined device validation build (2026-07-26)
+
+- Root cause of the missing phone changes: the device had the Debug APK from `fix/review-vocabulary-corrections`, while the completed player/transcript work remained only on `feature/player-transcript-fixes`. Installing the later APK replaced the earlier player build because both use `versionCode 1` / `versionName 0.1.0`.
+- Created `feature/device-latest-integration` from the review-fix branch and merged the player/transcript branch. The integrated source now contains both sets of fixes, with no Room schema change. The merged Debug build passed 128 unit tests, `:app:lintDebug`, and `:app:assembleDebug`.
+- The integrated APK was installed in place on OPPO PHY110 while the device was connected. Its device SHA-256 matched the local artifact (`7b6be6d6315b7a7db33611d36aa44f39243210f1effa25ff34af24f5a70703aa`), Home and immersive playback rendered, double-tap playback did not reveal controls, and the transcript route rendered bilingual cues.
+- During repeated transition testing, returning to the immersive player left the one-shot transcript-navigation flag set, which prevented reopening the transcript from the same player instance. This is now reset together with the transition animation when the live playback handoff is consumed. A rebuilt APK passed the same automated tests, but the device disconnected before this final rebuild could be installed; final re-entry verification remains pending reconnection.
+- Branch: `feature/device-latest-integration`; merge and follow-up fix are local until the final PHY110 verification is complete. Do not use the older `app-debug.apk` installed before this section for acceptance.
 
 ## Review vocabulary correction and Chinese definitions (2026-07-25)
 
@@ -13,6 +21,16 @@
 - Real-device validation: the Debug APK was installed in place on OPPO PHY110 (`9b43a22c`) with app data retained. Opening Review ran the repair successfully: persisted `consensu` became `consensus` with phonetic and bundled Chinese sense, `collectively` received `集体地；聚集地；共同地`, and `PRAGMA foreign_key_check` returned no violations. Home and Review rendered normally, and inspected Logcat contained no app fatal, Room, or SQLite error.
 - Known limitation: derived Chinese definitions currently cover regular `-ly` adverbs when a bundled base-form entry exists. Other missing dictionary forms remain `释义待补全` unless contextual Chinese is available or a provider supplies a Chinese sense.
 - Branch: `fix/review-vocabulary-corrections`; implementation commit `88ca540` is pushed to `origin`. Pull Request: https://github.com/owen445884838-blip/SubLingo/pull/3.
+
+## Player gesture, progress handoff, and bilingual mapping fixes (2026-07-25)
+
+- Double-tap rewind, play/pause, and fast-forward actions in both the immersive and transcript players no longer make player controls visible. Single taps and direct control interactions retain the existing control visibility and timeout behavior.
+- Returning from the transcript by downward gesture, header back, or Android system back now publishes the live Media3 position through a video-scoped, one-shot handoff before the immersive player resumes. Room persistence remains the durable source of truth, while the handoff prevents stale `rememberSaveable` state or an asynchronous database update from restoring the pre-transcript position.
+- Transcript display repair now rejects disjoint Chinese regions attached to one English occurrence and retains the most informative contiguous region. Adjacent fragments that form one semantic mapping, such as `did not -> 没 + 有`, remain supported. This repairs existing persisted transcripts at display time without schema changes, retranscription, retranslation, or database deletion.
+- Affected modules: shared video gesture helpers, immersive player UI, transcript player UI/ViewModel, and focused unit tests. Persisted-data changes: none; Room remains at schema 13.
+- Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:assembleDebug` passed with 125 tests, 0 failures, and 0 errors; `:app:lintDebug` passed; `git diff --check` passed. The Debug APK is `app/build/outputs/apk/debug/app-debug.apk` and remains untracked.
+- Device validation was not run because no Android device or emulator was connected. Manual gesture, return-transition, and screenshot-specific transcript verification remain required on a device before merge.
+- Branch: `feature/player-transcript-fixes`. Implementation commit: `d6e3d2d`. The branch is pushed to `origin`; the GitHub PR form is prepared at `https://github.com/owen445884838-blip/SubLingo/pull/new/feature/player-transcript-fixes` but has not been submitted.
 
 ## GitHub prerelease and project presentation (2026-07-23)
 

@@ -4,6 +4,10 @@
 
 - Preserve singular vocabulary lemmas such as `consensus` instead of truncating their final `s`, and repair previously affected review data in place.
 - Derive Chinese definitions for supported adverbs from bundled base-form entries and prevent English-only definitions from appearing in the Chinese review-card field.
+- Player double-tap rewind, play/pause, and fast-forward gestures no longer reveal playback controls.
+- Immersive and transcript players now hand off the live playback position in both directions.
+- Bilingual transcript highlighting no longer maps one English phrase to unrelated, disjoint Chinese regions.
+- Returning from the transcript resets the immersive player's transition state, so the transcript can be opened again from the same player instance.
 
 ## 0.1.0-alpha.1 — 2026-07-23
 

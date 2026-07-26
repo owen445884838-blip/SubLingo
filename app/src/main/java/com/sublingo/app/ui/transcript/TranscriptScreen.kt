@@ -74,6 +74,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.activity.compose.BackHandler
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.core.view.WindowCompat
 import androidx.media3.common.MediaItem
@@ -88,6 +89,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.sublingo.app.ui.components.PlaybackSpeedMenu
+import com.sublingo.app.ui.components.PlaybackPositionHandoff
 import com.sublingo.app.ui.components.SubLingoLogo
 import com.sublingo.app.ui.components.VideoScrubber
 import com.sublingo.app.ui.components.VideoDoubleTapAction
@@ -147,11 +149,21 @@ fun TranscriptScreen(
     var playerReturnProgress by remember { mutableFloatStateOf(0f) }
     var playerReturnJob by remember { mutableStateOf<Job?>(null) }
     var playerReturnStarted by remember { mutableStateOf(false) }
+    var playerReturnFinished by remember { mutableStateOf(false) }
     val transitionScope = rememberCoroutineScope()
     val returnDragDistancePx = with(androidx.compose.ui.platform.LocalDensity.current) { 280.dp.toPx() }
 
     DisposableEffect(transitionSnapshot) {
         onDispose { transitionSnapshot?.let(TranscriptTransitionHandoff::clear) }
+    }
+
+    fun finishPlayerReturn() {
+        if (playerReturnFinished) return
+        playerReturnFinished = true
+        val currentPosition = player.currentPosition.coerceAtLeast(0L)
+        PlaybackPositionHandoff.publish(state.videoId, currentPosition)
+        viewModel.savePosition(currentPosition)
+        onBack()
     }
 
     fun settlePlayerReturn(openPlayer: Boolean) {
@@ -164,20 +176,21 @@ fun TranscriptScreen(
                 tween(if (openPlayer) 220 else 200, easing = FastOutSlowInEasing),
             ) { playerReturnProgress = value }
             if (openPlayer) {
-                viewModel.savePosition(player.currentPosition)
-                onBack()
+                finishPlayerReturn()
             }
         }
     }
 
-    fun togglePlayback() {
+    fun togglePlayback(showControls: Boolean = true) {
         sentencePlaybackWindow = null
         if (player.isPlaying) player.pause() else player.play()
-        playerControlsVisible = true
-        playerInteractionKey++
+        if (showControls) {
+            playerControlsVisible = true
+            playerInteractionKey++
+        }
     }
 
-    fun seekBy(deltaMs: Long) {
+    fun seekBy(deltaMs: Long, showControls: Boolean = true) {
         sentencePlaybackWindow = null
         val duration = player.duration.takeIf { it > 0L } ?: state.durationMs
         val target = (player.currentPosition + deltaMs).coerceIn(0L, duration.coerceAtLeast(0L))
@@ -186,9 +199,13 @@ fun TranscriptScreen(
         pendingSeekStartedAt = android.os.SystemClock.elapsedRealtime()
         reportedSeekPosition = null
         player.seekTo(target)
-        playerControlsVisible = true
-        playerInteractionKey++
+        if (showControls) {
+            playerControlsVisible = true
+            playerInteractionKey++
+        }
     }
+
+    BackHandler { finishPlayerReturn() }
 
     LaunchedEffect(state.filePath, state.companionAudioPath) {
         if (!state.isLoaded) return@LaunchedEffect
@@ -324,7 +341,7 @@ fun TranscriptScreen(
                 title = state.title,
                 mode = mode,
                 onModeChange = { mode = it },
-                onBack = onBack,
+                onBack = ::finishPlayerReturn,
             )
         }
         Spacer(Modifier.height(10.dp).graphicsLayer { alpha = (1f - playerReturnProgress / .72f).coerceIn(0f, 1f) })
@@ -340,17 +357,17 @@ fun TranscriptScreen(
                 playerControlsVisible = !playerControlsVisible
                 playerInteractionKey++
             },
-            onTogglePlayback = ::togglePlayback,
+            onTogglePlayback = { togglePlayback() },
             onVideoDoubleTap = { action ->
                 when (action) {
                     VideoDoubleTapAction.REWIND -> {
-                        seekBy(-10_000L)
+                        seekBy(-10_000L, showControls = false)
                         seekFeedback = VideoDoubleTapAction.REWIND
                         seekFeedbackKey++
                     }
-                    VideoDoubleTapAction.TOGGLE_PLAYBACK -> togglePlayback()
+                    VideoDoubleTapAction.TOGGLE_PLAYBACK -> togglePlayback(showControls = false)
                     VideoDoubleTapAction.FORWARD -> {
-                        seekBy(10_000L)
+                        seekBy(10_000L, showControls = false)
                         seekFeedback = VideoDoubleTapAction.FORWARD
                         seekFeedbackKey++
                     }
