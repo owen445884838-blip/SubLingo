@@ -211,11 +211,16 @@ internal fun retainBestContiguousChineseCluster(
                     clusters += mutableListOf(item)
                 }
             }
-            clusters.maxWithOrNull(
-                compareBy<List<Positioned>> { cluster ->
-                    cluster.sumOf { item -> item.alignment.chineseSurface.count(Char::isLetterOrDigit) }
-                }.thenBy { cluster -> -(cluster.firstOrNull()?.start ?: Int.MAX_VALUE) },
-            )?.map { it.alignment }.orEmpty()
+            val bestSingle = positioned.maxWithOrNull(
+                compareBy<Positioned> { it.alignment.chineseSurface.count(Char::isLetterOrDigit) }
+                    .thenBy { -it.start },
+            ) ?: return@flatMap group
+            val compactCluster = clusters.firstOrNull { cluster ->
+                bestSingle in cluster && cluster.size > 1 && cluster.all { item ->
+                    item.alignment.chineseSurface.count(Char::isLetterOrDigit) <= 1
+                }
+            }
+            (compactCluster ?: listOf(bestSingle)).map { it.alignment }
         }
         .sortedBy { it.ordinal }
 }
@@ -279,7 +284,8 @@ class TranscriptViewModel @Inject constructor(
                 chineseText = chineseText,
                 alignments = localizeSentenceFallbackAlignments(
                     sourceText = row.english.orEmpty(),
-                    alignments = translationPairsBySequence[row.sequence].orEmpty(),
+                    alignments = translationPairsBySequence[row.sequence].orEmpty()
+                        .filterNot { it.source == com.sublingo.app.data.media.TranslationWordPair.SOURCE_GAP_REPAIR },
                 ),
             )
                 .groupBy { alignment ->

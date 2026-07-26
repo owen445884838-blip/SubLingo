@@ -619,6 +619,7 @@ class TranslateWorker @AssistedInject constructor(
                             englishSurface = it.english,
                             chineseSurface = it.chinese,
                             englishOccurrence = it.englishOccurrence,
+                            source = it.source,
                         )
                     }
                 },

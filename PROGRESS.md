@@ -4,6 +4,13 @@
 > Purpose: give any new agent a fast snapshot of the current implementation state.
 > Status precedence: the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
 
+## Bilingual transcript mapping correction (2026-07-26)
+
+- Fixed the remaining bilingual transcript mismatch shown in the 01:05 Samsung cue. Translation gap repair had attached uncovered Chinese text to the nearest English phrase to satisfy full-coverage validation, and the transcript display could not distinguish that synthetic attachment from a model-provided semantic mapping. This caused `但这就是` to highlight together with `that we've come to expect from Samsung`.
+- Newly generated gap-repair rows now retain an explicit `TRANSLATION_GAP_REPAIR` source and are excluded from transcript highlighting while remaining available to translation completeness validation. Existing persisted transcripts are repaired at display time: when one English occurrence owns multiple Chinese regions, the most informative exact region wins; adjacent single-character fragments such as `没` + `有` remain supported.
+- Added a regression using the reported English/Chinese sentence and source-marker coverage tests. There is no Room schema or persisted-data format change; existing videos require neither deletion nor retranslation.
+- Affected modules: translation word-map repair/persistence, transcript display repair, and focused unit tests. Automated validation with Android Studio JBR 17: focused mapping tests passed; the complete `:app:testDebugUnitTest :app:lintDebug :app:assembleDebug` gate passed with 130 tests, 0 failures, and 0 errors across 32 suites; `git diff --check` passed. No device or emulator was connected, so screenshot-specific device verification remains pending. Branch: `fix/transcript-bilingual-mapping`.
+
 ## Combined device validation build (2026-07-26)
 
 - Root cause of the missing phone changes: the device had the Debug APK from `fix/review-vocabulary-corrections`, while the completed player/transcript work remained only on `feature/player-transcript-fixes`. Installing the later APK replaced the earlier player build because both use `versionCode 1` / `versionName 0.1.0`.

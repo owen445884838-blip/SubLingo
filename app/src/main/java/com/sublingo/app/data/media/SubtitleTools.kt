@@ -257,7 +257,17 @@ object TranslationAlignment {
  * emit one malformed object inside an otherwise usable array. Parsing the whole array would discard
  * every valid translation and bypass [TranslationAlignment]'s targeted missing-index retry.
  */
-data class TranslationWordPair(val english: String, val chinese: String, val englishOccurrence: Int = 0)
+data class TranslationWordPair(
+    val english: String,
+    val chinese: String,
+    val englishOccurrence: Int = 0,
+    val source: String = SOURCE_MODEL,
+) {
+    companion object {
+        const val SOURCE_MODEL = "TRANSLATION"
+        const val SOURCE_GAP_REPAIR = "TRANSLATION_GAP_REPAIR"
+    }
+}
 data class ParsedTranslation(
     val item: TranslationAlignment.Item,
     val wordPairs: List<TranslationWordPair>,
@@ -325,6 +335,7 @@ object TranslationWordMapRepair {
                     english = localAnchor?.english ?: sourceText.trim(),
                     chinese = parsed.item.text.substring(start, index),
                     englishOccurrence = localAnchor?.englishOccurrence ?: 0,
+                    source = TranslationWordPair.SOURCE_GAP_REPAIR,
                 ),
             )
         }

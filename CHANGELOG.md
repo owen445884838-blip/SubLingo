@@ -7,6 +7,7 @@
 - Player double-tap rewind, play/pause, and fast-forward gestures no longer reveal playback controls.
 - Immersive and transcript players now hand off the live playback position in both directions.
 - Bilingual transcript highlighting no longer maps one English phrase to unrelated, disjoint Chinese regions.
+- Synthetic Chinese gap coverage is no longer shown as a semantic English/Chinese word mapping; existing transcripts are repaired without retranslation.
 - Returning from the transcript resets the immersive player's transition state, so the transcript can be opened again from the same player instance.
 
 ## 0.1.0-alpha.1 — 2026-07-23
