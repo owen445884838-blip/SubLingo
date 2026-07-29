@@ -403,6 +403,11 @@ object VocabularyLemmaRepairPolicy {
     }
 }
 
+object VocabularyLexemeIdentity {
+    fun resolve(normalizedLemma: String, existingId: String?): String =
+        existingId ?: "lexeme-en-${normalizedLemma.hashCode().toUInt().toString(16)}"
+}
+
 data class SelectedVocabulary(
     val surfaceForm: String,
     val lemma: String,

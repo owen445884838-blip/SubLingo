@@ -1,8 +1,17 @@
 # SubLingo Progress
 
-> Last updated: 2026-07-26
+> Last updated: 2026-07-29
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Vocabulary persistence foreign-key fix (2026-07-29)
+
+- Fixed `SQLITE_CONSTRAINT_FOREIGNKEY (787)` during the vocabulary stage after an existing malformed lemma had been repaired in place. The repair intentionally preserves the existing `LexemeEntity.id`, but vocabulary persistence previously recomputed a different ID from the corrected lemma and used that nonexistent ID for new occurrences and review cards.
+- Vocabulary persistence now resolves lexeme identity before writing dependent rows: an existing lexeme keeps its primary key, while only a genuinely new lexeme receives the deterministic lemma-derived ID. Occurrence IDs, occurrence foreign keys, review-card lookup, and review-card foreign keys all use the resolved parent entity ID.
+- Affected modules: vocabulary identity policy, `VocabWorker` persistence, focused regression tests, changelog, and progress notes. Persisted data and Room schema remain unchanged at version 13; no migration or user-data reset is required.
+- Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:lintDebug :app:assembleDebug` passed with 134 tests, 0 failures, and 0 errors across 32 suites; `git diff --check` passed. Debug APK SHA-256: `018665b0d3c0b30460e6dd52765b3f8a2816037cb0436c1138e9f4829e281cdb`.
+- Real-device validation: the fixed Debug APK was installed in place on OPPO PHY110 (`9b43a22c`, API 36) with app data retained. Retrying failed job `job-video-c5cab4d` reused all three cached vocabulary batches and completed `VOCABULARY / SUCCEEDED / 100%`, persisting 1,291 occurrences across 580 lexemes. `PRAGMA foreign_key_check` returned no rows; app-specific Logcat recorded `VocabWorker` and WorkManager success with no foreign-key, SQLite constraint, Room, fatal, or ANR error.
+- Branch: `fix/vocabulary-foreign-key`.
 
 ## Review lemma repair and card-switch performance (2026-07-26)
 

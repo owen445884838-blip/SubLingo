@@ -137,6 +137,17 @@ class VocabularyToolsTest {
         assertTrue(VocabularyLemmaRepairPolicy.correctionCandidates("application", listOf("applications")).isEmpty())
     }
 
+    @Test fun existingLexemeIdentityWinsOverIdDerivedFromRepairedLemma() {
+        assertEquals(
+            "lexeme-en-legacy-eliminat",
+            VocabularyLexemeIdentity.resolve("eliminate", "lexeme-en-legacy-eliminat"),
+        )
+        assertEquals(
+            "lexeme-en-${"eliminate".hashCode().toUInt().toString(16)}",
+            VocabularyLexemeIdentity.resolve("eliminate", existingId = null),
+        )
+    }
+
     @Test fun legacyTrailingSCorruptionCanBeRepairedFromThePersistedSurface() {
         assertEquals(
             "consensus",

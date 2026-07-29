@@ -48,6 +48,7 @@ import com.sublingo.app.data.vocabulary.ContextualChineseMeaningResolver
 import com.sublingo.app.data.vocabulary.PhraseAuditPlanner
 import com.sublingo.app.data.vocabulary.LlmJsonResponseParser
 import com.sublingo.app.data.vocabulary.StandardDictionarySenseRepairer
+import com.sublingo.app.data.vocabulary.VocabularyLexemeIdentity
 import com.sublingo.app.data.vocabulary.VocabularyLemmaRepairPolicy
 import com.sublingo.app.data.vocabulary.VocabularyDifficulty
 import com.sublingo.app.data.vocabulary.VocabularyDifficultyClassifier
@@ -833,13 +834,13 @@ class VocabWorker @AssistedInject constructor(
             alignedSelected.forEach { item ->
                 val cue = cueById[item.sourceCueId] ?: return@forEach
                 val normalized = item.lemma.lowercase().trim().replace(Regex("\\s+"), " ")
-                val lexemeId = "lexeme-en-${normalized.hashCode().toUInt().toString(16)}"
+                val existingLexeme = vocabularyDao.findLexeme("en", normalized)
+                val lexemeId = VocabularyLexemeIdentity.resolve(normalized, existingLexeme?.id)
                 val dictionaryEntry = if (dictionaryEntries.containsKey(normalized)) {
                     dictionaryEntries[normalized]
                 } else {
                     dictionary.lookup(normalized).also { dictionaryEntries[normalized] = it }
                 }
-                val existingLexeme = vocabularyDao.findLexeme("en", normalized)
                 val lexeme = (existingLexeme ?: LexemeEntity(lexemeId, item.lemma, normalized)).copy(
                         lemma = item.lemma,
                         phonetic = dictionaryEntry?.phonetic ?: existingLexeme?.phonetic,
@@ -867,8 +868,8 @@ class VocabWorker @AssistedInject constructor(
                 )
                 vocabularyDao.upsertOccurrence(
                     WordOccurrenceEntity(
-                        id = "occ-${lexemeId}-${cue.id}-${item.surfaceForm.lowercase().hashCode().toUInt().toString(16)}",
-                        lexemeId = lexemeId,
+                        id = "occ-${lexeme.id}-${cue.id}-${item.surfaceForm.lowercase().hashCode().toUInt().toString(16)}",
+                        lexemeId = lexeme.id,
                         videoId = videoId,
                         cueId = cue.id,
                         surfaceForm = item.surfaceForm,
@@ -882,8 +883,8 @@ class VocabWorker @AssistedInject constructor(
                         difficultyConfidence = if (item.difficultyLevel == VocabularyDifficulty.UNKNOWN) .65f else .9f,
                     ),
                 )
-                if (vocabularyDao.reviewCardCount(lexemeId) == 0) {
-                    vocabularyDao.upsertReviewCard(ReviewCardEntity("card-$lexemeId", lexemeId))
+                if (vocabularyDao.reviewCardCount(lexeme.id) == 0) {
+                    vocabularyDao.upsertReviewCard(ReviewCardEntity("card-${lexeme.id}", lexeme.id))
                 }
             }
             jobDao.getById(jobId)?.let { job ->
