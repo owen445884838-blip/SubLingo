@@ -2,7 +2,7 @@
 
 ## Build and signing
 
-- Run `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew clean :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:bundleRelease`.
+- Run `JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home' ./gradlew clean :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:verifyReleasePageSize :app:bundleRelease :app:generateReleaseSbom`.
 - Release signing is read only from environment variables:
   - `SUBLINGO_RELEASE_STORE_FILE`
   - `SUBLINGO_RELEASE_STORE_PASSWORD`
@@ -14,6 +14,7 @@
 ## Required validation
 
 - Verify API 26 and a current Android version using the exact signed Release build.
+- Verify the exact Release APK on a 16 KB ARM64 system image and run `:app:verifyReleasePageSize` against every packaged 64-bit ELF library.
 - Exercise local import, YouTube/Bilibili download, cancellation/retry, process death/relaunch, notification denial, playback, transcript, review, and deletion.
 - Verify Room upgrade from every previously distributed schema. A missing migration must fail loudly; destructive fallback is forbidden.
 - Inspect Logcat for secrets and inspect the manifest/resources after R8.
