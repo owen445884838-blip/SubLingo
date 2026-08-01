@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.1.0-alpha.3 — 2026-08-01
+
+- Target Android 16 / API 36 and update the Android build toolchain to its supported stable versions.
+- Verify every packaged 64-bit ELF and the nested Python runtime use 16 KB-compatible load-segment alignment, execute yt-dlp on a 16 KB device, and retain the no-FFmpeg compatibility path for the remaining incompatible WebP libraries.
+
 ## 0.1.0-alpha.2 — 2026-08-01
 
 - Preserve an existing lexeme's primary key when regenerating vocabulary after an in-place lemma repair, preventing foreign-key failures in occurrence and review-card persistence.

@@ -1,7 +1,13 @@
 import java.io.File
+import java.io.ByteArrayInputStream
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.security.MessageDigest
 import java.time.Instant
 import java.util.UUID
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
 
 plugins {
     id("com.android.application")
@@ -38,16 +44,16 @@ val hasReleaseSigning = listOf(
 
 android {
     namespace = "com.sublingo.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.sublingo.app"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 2
-        versionName = "0.1.0-alpha.2"
+        targetSdk = 36
+        versionCode = 3
+        versionName = "0.1.0-alpha.3"
 
-        testInstrumentationRunner = "com.sublingo.app.test.SublingoTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
 
         ndk { abiFilters += setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64") }
@@ -151,6 +157,7 @@ dependencies {
     testImplementation("app.cash.turbine:turbine:1.2.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.08.00"))
+    androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.11.0")
@@ -203,5 +210,105 @@ tasks.register("generateReleaseSbom") {
         target.parentFile.mkdirs()
         target.writeText(groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(document)) + "\n")
         println("Wrote ${components.size} Release components to ${target.absolutePath}")
+    }
+}
+
+tasks.register("verifyReleasePageSize") {
+    group = "verification"
+    description = "Verifies that packaged 64-bit Release ELF libraries support 16 KB memory pages."
+    dependsOn("assembleRelease")
+    val releaseApk = layout.buildDirectory.file("outputs/apk/release/app-release-unsigned.apk")
+    inputs.file(releaseApk)
+    doLast {
+        val requiredAlignment = 16L * 1024L
+        fun verifyElf(name: String, bytes: ByteArray): Boolean {
+            val isElf = bytes.size >= 64 &&
+                bytes[0] == 0x7f.toByte() && bytes[1] == 'E'.code.toByte() &&
+                bytes[2] == 'L'.code.toByte() && bytes[3] == 'F'.code.toByte()
+            if (!isElf) return false
+
+            val byteOrder = when (bytes[5].toInt()) {
+                1 -> ByteOrder.LITTLE_ENDIAN
+                2 -> ByteOrder.BIG_ENDIAN
+                else -> error("Unknown ELF byte order: $name")
+            }
+            val buffer = ByteBuffer.wrap(bytes).order(byteOrder)
+            val is64Bit = when (bytes[4].toInt()) {
+                1 -> false
+                2 -> true
+                else -> error("Unknown ELF class: $name")
+            }
+            val programHeaderOffset = if (is64Bit) buffer.getLong(32) else {
+                buffer.getInt(28).toLong() and 0xffffffffL
+            }
+            val programHeaderEntrySize = buffer.getShort(if (is64Bit) 54 else 42).toInt() and 0xffff
+            val programHeaderCount = buffer.getShort(if (is64Bit) 56 else 44).toInt() and 0xffff
+            var loadSegmentCount = 0
+            repeat(programHeaderCount) { index ->
+                val headerOffset = programHeaderOffset + index.toLong() * programHeaderEntrySize
+                check(headerOffset >= 0 && headerOffset + programHeaderEntrySize <= bytes.size) {
+                    "Invalid ELF program header bounds: $name"
+                }
+                if (buffer.getInt(headerOffset.toInt()) == 1) {
+                    loadSegmentCount += 1
+                    val alignmentOffset = headerOffset.toInt() + if (is64Bit) 48 else 28
+                    val alignment = if (is64Bit) buffer.getLong(alignmentOffset) else {
+                        buffer.getInt(alignmentOffset).toLong() and 0xffffffffL
+                    }
+                    check(alignment >= requiredAlignment) {
+                        "$name has a PT_LOAD alignment of $alignment bytes; 16384 required"
+                    }
+                }
+            }
+            check(loadSegmentCount > 0) { "ELF contains no PT_LOAD segment: $name" }
+            return true
+        }
+
+        var packagedElfCount = 0
+        var pythonArchiveCount = 0
+        var pythonElfCount = 0
+        ZipFile(releaseApk.get().asFile).use { apk ->
+            apk.entries().asSequence()
+                .filter {
+                    !it.isDirectory && it.name.endsWith(".so") &&
+                        (it.name.startsWith("lib/arm64-v8a/") || it.name.startsWith("lib/x86_64/"))
+                }
+                .forEach { entry ->
+                    val bytes = apk.getInputStream(entry).use { it.readBytes() }
+                    if (!verifyElf(entry.name, bytes)) {
+                        check(entry.name.endsWith(".zip.so")) {
+                            "Packaged native entry is neither ELF nor an expected runtime archive: ${entry.name}"
+                        }
+                        if (entry.name.endsWith("/libpython.zip.so")) {
+                            pythonArchiveCount += 1
+                            ZipInputStream(ByteArrayInputStream(bytes)).use { archive ->
+                                while (true) {
+                                    val nestedEntry = archive.nextEntry ?: break
+                                    if (!nestedEntry.isDirectory) {
+                                        val nestedBytes = archive.readBytes()
+                                        if (verifyElf("${entry.name}!/${nestedEntry.name}", nestedBytes)) {
+                                            pythonElfCount += 1
+                                        }
+                                    }
+                                    archive.closeEntry()
+                                }
+                            }
+                        }
+                        return@forEach
+                    }
+
+                    packagedElfCount += 1
+                    check(entry.method == ZipEntry.DEFLATED) {
+                        "Uncompressed ELF ZIP alignment requires separate validation: ${entry.name}"
+                    }
+                }
+        }
+        check(packagedElfCount > 0) { "Release APK contains no ELF libraries to validate" }
+        check(pythonArchiveCount == 2) { "Expected arm64-v8a and x86_64 Python runtime archives" }
+        check(pythonElfCount > 0) { "Python runtime archives contain no ELF libraries to validate" }
+        println(
+            "Verified $packagedElfCount packaged ELF libraries and $pythonElfCount nested Python " +
+                "runtime ELF libraries for 16 KB page support",
+        )
     }
 }
