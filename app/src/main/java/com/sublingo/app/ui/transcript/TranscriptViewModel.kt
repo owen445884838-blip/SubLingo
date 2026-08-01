@@ -172,6 +172,59 @@ internal fun localizeSentenceFallbackAlignments(
     }
 }
 
+/**
+ * A single English occurrence should not light up unrelated Chinese regions. Translation repair can
+ * legitimately split one meaning across adjacent rows (for example `did not` -> `没` + `有`), but
+ * legacy fallback rows sometimes attach distant Chinese gaps to the same English anchor. Keep the
+ * most informative contiguous cluster and discard the disjoint fallback fragments at display time.
+ */
+internal fun retainBestContiguousChineseCluster(
+    chineseText: String,
+    alignments: List<SubtitleWordAlignmentEntity>,
+): List<SubtitleWordAlignmentEntity> {
+    if (chineseText.isBlank() || alignments.size < 2) return alignments
+    return alignments
+        .groupBy { it.englishSurface.lowercase().trim().replace(Regex("\\s+"), " ") to it.englishOccurrence }
+        .values
+        .flatMap { group ->
+            if (group.size < 2) return@flatMap group
+            data class Positioned(val alignment: SubtitleWordAlignmentEntity, val start: Int, val endExclusive: Int)
+            var cursor = 0
+            val positioned = group.sortedBy { it.ordinal }.mapNotNull { alignment ->
+                val surface = alignment.chineseSurface.trim()
+                val start = chineseText.indexOf(surface, startIndex = cursor).takeIf { it >= 0 }
+                    ?: chineseText.indexOf(surface).takeIf { it >= 0 }
+                    ?: return@mapNotNull null
+                cursor = start + surface.length
+                Positioned(alignment, start, cursor)
+            }
+            if (positioned.size < 2) return@flatMap group
+            val clusters = mutableListOf<MutableList<Positioned>>()
+            positioned.forEach { item ->
+                val previous = clusters.lastOrNull()?.lastOrNull()
+                val gapIsOnlyPunctuation = previous != null && chineseText
+                    .substring(previous.endExclusive.coerceAtMost(item.start), item.start)
+                    .none(Char::isLetterOrDigit)
+                if (previous != null && (item.start <= previous.endExclusive || gapIsOnlyPunctuation)) {
+                    clusters.last() += item
+                } else {
+                    clusters += mutableListOf(item)
+                }
+            }
+            val bestSingle = positioned.maxWithOrNull(
+                compareBy<Positioned> { it.alignment.chineseSurface.count(Char::isLetterOrDigit) }
+                    .thenBy { -it.start },
+            ) ?: return@flatMap group
+            val compactCluster = clusters.firstOrNull { cluster ->
+                bestSingle in cluster && cluster.size > 1 && cluster.all { item ->
+                    item.alignment.chineseSurface.count(Char::isLetterOrDigit) <= 1
+                }
+            }
+            (compactCluster ?: listOf(bestSingle)).map { it.alignment }
+        }
+        .sortedBy { it.ordinal }
+}
+
 @HiltViewModel
 class TranscriptViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -227,9 +280,13 @@ class TranscriptViewModel @Inject constructor(
         }
         transcriptRows.map { row ->
             val chineseText = row.chinese.orEmpty()
-            val translatedPairs = localizeSentenceFallbackAlignments(
-                sourceText = row.english.orEmpty(),
-                alignments = translationPairsBySequence[row.sequence].orEmpty(),
+            val translatedPairs = retainBestContiguousChineseCluster(
+                chineseText = chineseText,
+                alignments = localizeSentenceFallbackAlignments(
+                    sourceText = row.english.orEmpty(),
+                    alignments = translationPairsBySequence[row.sequence].orEmpty()
+                        .filterNot { it.source == com.sublingo.app.data.media.TranslationWordPair.SOURCE_GAP_REPAIR },
+                ),
             )
                 .groupBy { alignment ->
                     alignment.englishSurface.lowercase().trim().replace(Regex("\\s+"), " ") to alignment.englishOccurrence

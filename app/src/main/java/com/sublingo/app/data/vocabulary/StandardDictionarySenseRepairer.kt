@@ -23,12 +23,33 @@ class StandardDictionarySenseRepairer @Inject constructor(
 
     suspend fun repairOutdatedSenses(): Int = mutex.withLock {
         withContext(Dispatchers.IO) {
-            var repaired = 0
+            var repaired = repairLegacyLemmas()
             vocabularyDao.lexemesNeedingStandardSense(STANDARD_DICTIONARY_SOURCE).forEach { lexeme ->
                 if (refreshLexeme(lexeme, allowRemote = false)) repaired++
             }
             repaired
         }
+    }
+
+    private suspend fun repairLegacyLemmas(): Int {
+        var repaired = 0
+        vocabularyDao.lexemesWithOccurrences().forEach { lexeme ->
+            val corrected = VocabularyLemmaRepairPolicy.correctionCandidates(
+                lemma = lexeme.lemma,
+                surfaceForms = vocabularyDao.surfaceFormsForLexeme(lexeme.id),
+            ).firstOrNull { candidate -> dictionary.lookup(candidate, allowRemote = false) != null }
+                ?: return@forEach
+            val collision = vocabularyDao.findLexeme(lexeme.language, corrected)
+            if (collision != null && collision.id != lexeme.id) return@forEach
+            vocabularyDao.updateLexeme(
+                lexemeId = lexeme.id,
+                lemma = corrected,
+                normalizedLemma = corrected,
+                phonetic = lexeme.phonetic,
+            )
+            repaired++
+        }
+        return repaired
     }
 
     suspend fun refreshLexeme(lexeme: LexemeEntity, allowRemote: Boolean = true): Boolean {

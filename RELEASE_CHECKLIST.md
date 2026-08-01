@@ -25,4 +25,4 @@
 - Regenerate `sbom/sublingo-release.cdx.json` and `THIRD_PARTY_NOTICES.md` from the release commit.
 - Include `LICENSE`, `NOTICE`, `PRIVACY.md`, source-code URL, and corresponding-source instructions with the release.
 - Confirm yt-dlp/youtubedl-android, FFmpeg, aria2c, ECDICT, Dictionary API data/audio, and platform download terms for the exact shipped package.
-- Publish initially as a prerelease (`v0.1.0-alpha.1`) until real-device acceptance is complete.
+- Keep validation/debug-signed artifacts as prereleases and label them explicitly; publish a production release only with the permanent signing key.

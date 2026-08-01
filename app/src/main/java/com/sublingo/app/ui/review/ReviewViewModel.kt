@@ -19,6 +19,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.flowOn
 
 enum class ReviewSection { STUDY, WORDS, STATS }
 
@@ -119,7 +122,8 @@ class ReviewViewModel @Inject constructor(
             canUndo = transient.second.isNotEmpty(),
             busy = transient.third,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ReviewUiState())
+    }.flowOn(Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ReviewUiState())
 
     init {
         viewModelScope.launch {
@@ -159,13 +163,26 @@ class ReviewViewModel @Inject constructor(
     fun rate(rating: ReviewRating) {
         val card = session.value.firstOrNull() ?: return
         if (busy.value) return
+        busy.value = true
+        // The next card is already composed behind this one. Advance the in-memory queue now so a
+        // Room transaction and the resulting aggregate projections cannot hold up the visual swap.
+        session.value = session.value.drop(1)
         viewModelScope.launch {
-            busy.value = true
-            repository.rate(card.cardId, rating, now)?.let { action ->
-                history.value = history.value + ReviewHistory(action, card)
-                session.value = session.value.drop(1)
+            try {
+                val action = repository.rate(card.cardId, rating, now)
+                if (action != null) {
+                    history.value = history.value + ReviewHistory(action, card)
+                } else if (session.value.none { it.cardId == card.cardId }) {
+                    session.value = listOf(card) + session.value
+                }
+            } catch (error: Throwable) {
+                if (error is CancellationException) throw error
+                if (session.value.none { it.cardId == card.cardId }) {
+                    session.value = listOf(card) + session.value
+                }
+            } finally {
+                busy.value = false
             }
-            busy.value = false
         }
     }
 

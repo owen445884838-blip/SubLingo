@@ -82,6 +82,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.sublingo.app.data.db.SubtitleCueEntity
 import com.sublingo.app.ui.components.PlaybackSpeedMenu
+import com.sublingo.app.ui.components.PlaybackPositionHandoff
 import com.sublingo.app.ui.components.SubLingoLogo
 import com.sublingo.app.ui.components.VideoScrubber
 import com.sublingo.app.ui.components.VideoDoubleTapAction
@@ -99,6 +100,7 @@ fun PlayerScreen(
     onOpenTranscript: (String) -> Unit = {},
 ) {
     val state by viewModel.uiState.collectAsState()
+    val playbackPositionUpdate = PlaybackPositionHandoff.peek(state.videoId)
     val context = LocalContext.current
     var savedPosition by rememberSaveable { mutableLongStateOf(state.startPositionMs) }
     var shouldResume by rememberSaveable { mutableStateOf(true) }
@@ -193,7 +195,7 @@ fun PlayerScreen(
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         onBack()
     }
-    fun togglePlayback() {
+    fun togglePlayback(showControls: Boolean = true) {
         if (player.playWhenReady) {
             shouldResume = false
             player.pause()
@@ -201,10 +203,12 @@ fun PlayerScreen(
             shouldResume = true
             player.play()
         }
-        controlsVisible = true
-        interactionKey++
+        if (showControls) {
+            controlsVisible = true
+            interactionKey++
+        }
     }
-    fun seekBy(deltaMs: Long) {
+    fun seekBy(deltaMs: Long, showControls: Boolean = true) {
         val upperBound = duration.takeIf { it > 0L } ?: state.durationMs
         val target = (player.currentPosition + deltaMs).coerceIn(0L, upperBound.coerceAtLeast(0L))
         position = target
@@ -213,8 +217,10 @@ fun PlayerScreen(
         pendingSeekStartedAt = android.os.SystemClock.elapsedRealtime()
         reportedSeekPosition = null
         player.seekTo(target)
-        controlsVisible = true
-        interactionKey++
+        if (showControls) {
+            controlsVisible = true
+            interactionKey++
+        }
     }
     BackHandler { exitPlayer() }
 
@@ -253,6 +259,20 @@ fun PlayerScreen(
         playing = true
         player.playWhenReady = true
         player.prepare()
+    }
+    LaunchedEffect(player, playbackPositionUpdate) {
+        playbackPositionUpdate?.let { update ->
+            transcriptTransitionJob?.cancel()
+            transcriptTransition = 0f
+            transcriptNavigationStarted = false
+            savedPosition = update.positionMs
+            position = update.positionMs
+            pendingSeekTarget = update.positionMs
+            pendingSeekStartedAt = android.os.SystemClock.elapsedRealtime()
+            reportedSeekPosition = null
+            player.seekTo(update.positionMs)
+            PlaybackPositionHandoff.consume(update)
+        }
     }
     LaunchedEffect(player) {
         while (true) {
@@ -316,13 +336,13 @@ fun PlayerScreen(
                     onDoubleTap = { offset ->
                         when (videoDoubleTapAction(offset.x, size.width.toFloat())) {
                             VideoDoubleTapAction.REWIND -> {
-                                seekBy(-10_000L)
+                                seekBy(-10_000L, showControls = false)
                                 seekFeedback = VideoDoubleTapAction.REWIND
                                 seekFeedbackKey++
                             }
-                            VideoDoubleTapAction.TOGGLE_PLAYBACK -> togglePlayback()
+                            VideoDoubleTapAction.TOGGLE_PLAYBACK -> togglePlayback(showControls = false)
                             VideoDoubleTapAction.FORWARD -> {
-                                seekBy(10_000L)
+                                seekBy(10_000L, showControls = false)
                                 seekFeedback = VideoDoubleTapAction.FORWARD
                                 seekFeedbackKey++
                             }
@@ -478,7 +498,7 @@ fun PlayerScreen(
                     }
                     Spacer(Modifier.weight(1f))
                     Surface(
-                        onClick = ::togglePlayback,
+                        onClick = { togglePlayback() },
                         modifier = Modifier.size(52.dp),
                         shape = RoundedCornerShape(999.dp),
                         color = Color(0xFFFDCF44),

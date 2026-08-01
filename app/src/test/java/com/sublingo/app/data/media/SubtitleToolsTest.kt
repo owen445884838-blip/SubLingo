@@ -178,6 +178,14 @@ class SubtitleToolsTest {
         assertEquals(listOf("好的", "欢迎", "你今天", "首次体验"), repaired.wordPairs.map { it.chinese })
         assertEquals("welcome", repaired.wordPairs.first { it.chinese == "好的" }.english)
         assertEquals("your first look", repaired.wordPairs.first { it.chinese == "你今天" }.english)
+        assertEquals(
+            TranslationWordPair.SOURCE_GAP_REPAIR,
+            repaired.wordPairs.first { it.chinese == "好的" }.source,
+        )
+        assertEquals(
+            TranslationWordPair.SOURCE_MODEL,
+            repaired.wordPairs.first { it.chinese == "欢迎" }.source,
+        )
     }
 
     @Test fun normalizesOutOfOrderModelPairsBeforeFillingGaps() {
@@ -258,6 +266,15 @@ class SubtitleToolsTest {
 
         val repaired = TranslationWordMapRepair.fillUncoveredChinese("Completely missing.", parsed)
 
-        assertEquals(listOf(TranslationWordPair("Completely missing.", "完全缺失")), repaired.wordPairs)
+        assertEquals(
+            listOf(
+                TranslationWordPair(
+                    "Completely missing.",
+                    "完全缺失",
+                    source = TranslationWordPair.SOURCE_GAP_REPAIR,
+                ),
+            ),
+            repaired.wordPairs,
+        )
     }
 }

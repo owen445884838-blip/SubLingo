@@ -181,6 +181,12 @@ interface VocabularyDao {
     @Query("SELECT * FROM LexemeSenseEntity WHERE lexemeId = :lexemeId ORDER BY id ASC")
     suspend fun sensesForLexeme(lexemeId: String): List<LexemeSenseEntity>
 
+    @Query("SELECT * FROM LexemeEntity WHERE EXISTS (SELECT 1 FROM WordOccurrenceEntity o WHERE o.lexemeId = LexemeEntity.id)")
+    suspend fun lexemesWithOccurrences(): List<LexemeEntity>
+
+    @Query("SELECT DISTINCT surfaceForm FROM WordOccurrenceEntity WHERE lexemeId = :lexemeId ORDER BY createdAt ASC")
+    suspend fun surfaceFormsForLexeme(lexemeId: String): List<String>
+
     @Query("DELETE FROM LexemeSenseEntity WHERE lexemeId = :lexemeId AND source != 'USER'")
     suspend fun deleteNonUserSenses(lexemeId: String)
 

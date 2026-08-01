@@ -8,6 +8,64 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TranscriptWordAlignerTest {
+    @Test fun `disjoint fallback mappings keep only the strongest Chinese cluster`() {
+        val english = "and you want to end up at a certain place that you know will be there, even if you're up high"
+        val chinese = "你想在某个确定的地方结束，即使你站得很高，你也知道它会在那里"
+        val alignments = listOf(
+            SubtitleWordAlignmentEntity("a0", "video", 7, 0, "even if you're up high", "你想在某个"),
+            SubtitleWordAlignmentEntity("a1", "video", 7, 1, "a certain place", "确定的地方"),
+            SubtitleWordAlignmentEntity("a2", "video", 7, 2, "even if you're up high", "即使你站得很高"),
+            SubtitleWordAlignmentEntity("a3", "video", 7, 3, "you know", "你也知道"),
+            SubtitleWordAlignmentEntity("a4", "video", 7, 4, "even if you're up high", "它会在那里"),
+        )
+
+        val retained = retainBestContiguousChineseCluster(chinese, alignments)
+
+        assertEquals(
+            listOf("确定的地方", "即使你站得很高", "你也知道"),
+            retained.map { it.chineseSurface },
+        )
+    }
+
+    @Test fun `adjacent Chinese fragments for one English phrase are preserved`() {
+        val alignments = listOf(
+            SubtitleWordAlignmentEntity("a0", "video", 7, 0, "did not", "没"),
+            SubtitleWordAlignmentEntity("a1", "video", 7, 1, "did not", "有"),
+        )
+
+        val retained = retainBestContiguousChineseCluster("我没有去", alignments)
+
+        assertEquals(listOf("没", "有"), retained.map { it.chineseSurface })
+    }
+
+    @Test fun `legacy gap prefix does not expand a reliable Chinese phrase`() {
+        val english = "No, but this is the slow and steady improvement that we've come to expect from Samsung."
+        val chinese = "不会，但这就是我们期待三星带来的稳步改进。"
+        val alignments = listOf(
+            SubtitleWordAlignmentEntity("a0", "video", 7, 0, "that we've come to expect from Samsung", "但这就是"),
+            SubtitleWordAlignmentEntity("a1", "video", 7, 1, "that we've come to expect from Samsung", "我们期待三星带来的"),
+            SubtitleWordAlignmentEntity("a2", "video", 7, 2, "slow and steady", "稳步"),
+            SubtitleWordAlignmentEntity("a3", "video", 7, 3, "improvement", "改进"),
+        )
+
+        val retained = retainBestContiguousChineseCluster(chinese, alignments)
+
+        assertEquals(
+            listOf("我们期待三星带来的", "稳步", "改进"),
+            retained.map { it.chineseSurface },
+        )
+        val highlights = retained.groupBy { it.englishSurface to it.englishOccurrence }.map { (_, pairs) ->
+            TranscriptHighlight(pairs.first().id, pairs.first().englishSurface, pairs.map { it.chineseSurface })
+        }
+        val aligned = TranscriptWordAligner.align(english, chinese, highlights)
+        val clauseId = aligned.english.first { it.text == "that we've come to expect from Samsung" }.alignmentId
+        assertTrue(
+            aligned.chinese.filter { it.text in setOf("但", "这", "就", "是") }
+                .all { it.alignmentIds.isEmpty() },
+        )
+        assertTrue(clauseId in aligned.chinese.first { it.text == "我们期待三星带来的" }.alignmentIds)
+    }
+
     @Test fun `legacy sentence fallback is localized before it can hide word pairs`() {
         val english = "And then little things"
         val localized = localizeSentenceFallbackAlignments(

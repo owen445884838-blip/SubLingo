@@ -62,6 +62,10 @@ class DictionaryClient @Inject constructor(
         val normalized = query.lowercase().trim()
         offlineDictionary.lookup(normalized)?.let { return it }
         localDictionary.lookup(normalized)?.let { return it }
+        dictionaryFallbackForms(normalized).firstNotNullOfOrNull { base ->
+            val entry = offlineDictionary.lookup(base) ?: localDictionary.lookup(base)
+            entry?.let { deriveDictionaryEntry(normalized, base, it) }
+        }?.let { return it }
         // A missing entry may use the remote fallback, but a broken/unavailable
         // bundled database must not turn a whole transcript into hundreds of
         // sequential API calls.
@@ -106,6 +110,50 @@ class DictionaryClient @Inject constructor(
         }.take(5)
         DictionaryEntry(phonetic, audio, senses)
     }.getOrNull()
+}
+
+internal fun dictionaryFallbackForms(word: String): List<String> = buildList {
+    when {
+        word.endsWith("ically") && word.length > 7 -> {
+            add(word.dropLast(2))
+            add(word.dropLast(4))
+        }
+        word.endsWith("ily") && word.length > 5 -> add(word.dropLast(3) + "y")
+        word.endsWith("ly") && word.length > 4 -> add(word.dropLast(2))
+    }
+}.distinct().filter { it.length >= 2 && it != word }
+
+internal fun deriveDictionaryEntry(word: String, base: String, entry: DictionaryEntry): DictionaryEntry? {
+    if (!word.endsWith("ly")) return null
+    val senses = entry.senses.mapNotNull { sense ->
+        val chinese = sense.definitionZh?.let(::deriveAdverbDefinitionZh) ?: return@mapNotNull null
+        DictionarySense(
+            pos = "adverb",
+            definition = "Adverb form of $base. ${sense.definition}",
+            definitionZh = chinese,
+        )
+    }
+    return senses.takeIf(List<DictionarySense>::isNotEmpty)?.let {
+        DictionaryEntry(phonetic = null, audioUrl = null, senses = it)
+    }
+}
+
+private fun deriveAdverbDefinitionZh(definition: String): String? {
+    val terms = definition
+        .split(Regex("[；;,，]+"))
+        .asSequence()
+        .map { segment ->
+            segment.trim()
+                .replace(Regex("^\\[[^]]+]\\s*"), "")
+                .replace(Regex("(?i)^(?:adv|adj|a|s)\\.\\s*"), "")
+                .trim()
+        }
+        .filter { it.isNotBlank() && it.any(Char::isLetter) }
+        .map { term -> if (term.endsWith("的") && term.length > 1) term.dropLast(1) + "地" else "以${term}方式" }
+        .distinct()
+        .take(3)
+        .toList()
+    return terms.takeIf(List<String>::isNotEmpty)?.joinToString("；")
 }
 
 private class BundledEnglishChineseDictionary(private val context: Context) {

@@ -44,8 +44,8 @@ android {
         applicationId = "com.sublingo.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.0-alpha.2"
 
         testInstrumentationRunner = "com.sublingo.app.test.SublingoTestRunner"
         vectorDrawables { useSupportLibrary = true }

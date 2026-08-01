@@ -105,6 +105,57 @@ class VocabularyToolsTest {
         assertEquals(2, candidates.first { it.normalized == "reliable" }.frequency)
     }
 
+    @Test fun singularWordsEndingInSAreNotTruncated() {
+        assertEquals("consensus", VocabularyPreprocessor.normalize("consensus"))
+        assertEquals("analysis", VocabularyPreprocessor.normalize("analysis"))
+        assertEquals("status", VocabularyPreprocessor.normalize("status"))
+        assertEquals("news", VocabularyPreprocessor.normalize("news"))
+    }
+
+    @Test fun silentEAndRegularInflectionsOfferCorrectDictionaryLemmas() {
+        assertEquals("eliminate", VocabularyPreprocessor.normalize("eliminated"))
+        assertEquals("eliminate", VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("eliminated").first())
+        assertTrue("write" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("writing"))
+        assertTrue("run" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("running"))
+        assertTrue("work" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("worked"))
+        assertTrue("study" in VocabularyLemmaRepairPolicy.dictionaryLemmaCandidates("studied"))
+    }
+
+    @Test fun legacyEdCorruptionOffersDictionaryValidatedRepairCandidate() {
+        assertEquals(
+            "eliminate",
+            VocabularyLemmaRepairPolicy.correctionCandidates("eliminat", listOf("eliminated")).first(),
+        )
+        assertEquals(
+            listOf("subscribe"),
+            VocabularyLemmaRepairPolicy.correctionCandidates("subscrib", listOf("subscribed")),
+        )
+        assertEquals(
+            listOf("write"),
+            VocabularyLemmaRepairPolicy.correctionCandidates("writ", listOf("writing")),
+        )
+        assertTrue(VocabularyLemmaRepairPolicy.correctionCandidates("application", listOf("applications")).isEmpty())
+    }
+
+    @Test fun existingLexemeIdentityWinsOverIdDerivedFromRepairedLemma() {
+        assertEquals(
+            "lexeme-en-legacy-eliminat",
+            VocabularyLexemeIdentity.resolve("eliminate", "lexeme-en-legacy-eliminat"),
+        )
+        assertEquals(
+            "lexeme-en-${"eliminate".hashCode().toUInt().toString(16)}",
+            VocabularyLexemeIdentity.resolve("eliminate", existingId = null),
+        )
+    }
+
+    @Test fun legacyTrailingSCorruptionCanBeRepairedFromThePersistedSurface() {
+        assertEquals(
+            "consensus",
+            VocabularyLemmaRepairPolicy.correctedLegacyLemma("consensu", listOf("consensus")),
+        )
+        assertEquals(null, VocabularyLemmaRepairPolicy.correctedLegacyLemma("application", listOf("applications")))
+    }
+
     @Test fun selectionCreatesOneLemmaFromDuplicateSuggestions() {
         val candidates = listOf(VocabularyCandidate("applications", "application", "c1", 2))
         val result = VocabularySelection.sanitize(
@@ -116,6 +167,17 @@ class VocabularyToolsTest {
         )
         assertEquals(1, result.size)
         assertEquals("application", result.single().lemma)
+    }
+
+    @Test fun selectionAcceptsCorrectLemmaWhenLocalStemDiffers() {
+        val candidates = listOf(VocabularyCandidate("writing", "writ", "c1", 1))
+        val result = VocabularySelection.sanitize(
+            listOf(SelectedVocabulary("writing", "write", "c1")),
+            candidates,
+            englishByCueId = mapOf("c1" to "She is writing clearly."),
+        )
+
+        assertEquals("write", result.single().lemma)
     }
 
     @Test fun invalidCueAndUnknownCandidateAreRejected() {

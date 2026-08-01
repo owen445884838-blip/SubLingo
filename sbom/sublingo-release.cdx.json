@@ -1,16 +1,16 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.5",
-    "serialNumber": "urn:uuid:14d11308-0929-4176-a36e-d05bb2675cf2",
+    "serialNumber": "urn:uuid:9e5a7ac7-c383-4285-86fd-ad72edd23d69",
     "version": 1,
     "metadata": {
-        "timestamp": "2026-07-23T12:51:23.186906Z",
+        "timestamp": "2026-08-01T05:59:32.265231Z",
         "component": {
             "type": "application",
             "group": "com.sublingo",
             "name": "SubLingo",
-            "version": "0.1.0",
-            "purl": "pkg:apk/com.sublingo.app@0.1.0"
+            "version": "0.1.0-alpha.2",
+            "purl": "pkg:apk/com.sublingo.app@0.1.0-alpha.2"
         },
         "tools": [
             {

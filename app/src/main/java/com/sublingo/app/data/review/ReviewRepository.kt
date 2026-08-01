@@ -14,6 +14,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.Dispatchers
 import com.sublingo.app.data.vocabulary.VocabularyDifficulty
 import com.sublingo.app.data.vocabulary.ContextualChineseMeaningResolver
 
@@ -33,6 +35,7 @@ class ReviewRepository @Inject constructor(
         reviewDao.observeCards(),
         vocabularyDao.observeReviewContextCandidates(),
     ) { cards, contexts -> enhanceContexts(cards, contexts) }
+        .flowOn(Dispatchers.Default)
     fun observeLogs(): Flow<List<ReviewLogEntity>> = reviewDao.observeLogs()
 
     suspend fun studyCards(
