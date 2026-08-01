@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.1.0-alpha.2 — 2026-08-01
+
 - Preserve an existing lexeme's primary key when regenerating vocabulary after an in-place lemma repair, preventing foreign-key failures in occurrence and review-card persistence.
 - Restore silent-e and other inflected vocabulary forms against the bundled dictionary, repair affected existing review cards such as `eliminat`, and make review-card transitions advance before rating persistence completes.
 - Preserve singular vocabulary lemmas such as `consensus` instead of truncating their final `s`, and repair previously affected review data in place.

@@ -1,8 +1,16 @@
 # SubLingo Progress
 
-> Last updated: 2026-07-29
+> Last updated: 2026-08-01
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-08-01 Alpha 2 release, the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Alpha 2 release closure (2026-08-01)
+
+- Closed the post-Alpha-1 acceptance cycle after the user completed OPPO PHY110 testing without finding further bugs. The cumulative release includes player/transcript position and mapping fixes, vocabulary definition and lemma repair, review-card transition optimization, and the vocabulary foreign-key correction. Version is now `0.1.0-alpha.2` with `versionCode 2`; Room remains at schema 13 with no migration or destructive data operation.
+- The clean Release gate passed with Android Studio JBR 17: `./gradlew clean :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:bundleRelease :app:generateReleaseSbom`. All 134 unit tests passed; Release Lint, R8/resource shrinking, APK packaging, AAB packaging, and the 150-component CycloneDX SBOM generation succeeded. Existing Kotlin/Android deprecation and opt-in warnings plus the expected inability to strip several prebuilt native libraries remain non-blocking.
+- Validation-only signed Release APK: `app/build/outputs/apk/release/app-release-validation.apk`, 226,916,207 bytes, SHA-256 `fb3cc249e14ddcf34bbffcb91b1b68c65c4825a0106d04160e873bddb357d4dc`. `apksigner` verifies v2/v3 signing. Unsigned Release AAB: 231,185,405 bytes, SHA-256 `878495190d1c96d53272eaf648ed9d6b2009fb188722fbd1c50cd2b705512848`. SBOM SHA-256: `f11fd91dcf7bcd4910f72f808e0cf0ff35f225c6c157559acfc5444c65a7b930`.
+- Exact-artifact device validation passed. OPPO PHY110 (`9b43a22c`, API 36) upgraded in place to version code 2 with its seven-video dataset retained, cold-launched to Home, and produced no fatal, Room, R8, Hilt, WorkManager, or native-link error. The same APK installed and launched on the Android 8.0/API 26 ARM64 emulator; Home and navigation rendered normally. Compose's caught lookup of the optional newer `Layout.TextInclusionStrategy` API remains a compatibility probe rather than a crash.
+- All four `SUBLINGO_RELEASE_*` variables were absent, so Alpha 2 remains an explicitly labeled validation/debug-signed GitHub prerelease. It is not a production/store artifact. Branch: `fix/vocabulary-foreign-key`. Pull Request: https://github.com/owen445884838-blip/SubLingo/pull/4.
 
 ## Vocabulary persistence foreign-key fix (2026-07-29)
 
