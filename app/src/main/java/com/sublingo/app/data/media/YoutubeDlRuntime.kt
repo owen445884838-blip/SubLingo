@@ -55,7 +55,7 @@ class YoutubeDlRuntime @Inject constructor(
             currentCapabilities = null
             Log.e(TAG, "Unable to initialize youtubedl-android runtime", error)
             throw IllegalStateException(
-                "下载引擎初始化失败：${error.message ?: error.javaClass.simpleName}",
+                "下载引擎初始化失败：${YoutubeDlRuntimeErrors.userMessage(error)}",
                 error,
             )
         }
@@ -93,3 +93,20 @@ data class YoutubeDlCapabilities(
     val ffmpegAvailable: Boolean,
     val aria2cAvailable: Boolean,
 )
+
+internal object YoutubeDlRuntimeErrors {
+    fun userMessage(error: Throwable): String {
+        val causes = generateSequence(error) { it.cause }.take(MAX_CAUSE_DEPTH).toList()
+        if (causes.any { it is LinkageError || it is ExceptionInInitializerError }) {
+            return "安装包中的运行时组件不兼容，请更新应用后重试"
+        }
+        return causes
+            .asSequence()
+            .mapNotNull { it.message?.trim()?.takeIf(String::isNotEmpty) }
+            .firstOrNull { it != GENERIC_INITIALIZATION_ERROR }
+            ?: "无法解压或启动运行时组件，请确认存储空间充足后重试"
+    }
+
+    private const val GENERIC_INITIALIZATION_ERROR = "failed to initialize"
+    private const val MAX_CAUSE_DEPTH = 8
+}

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Fix Release builds failing to initialize the download engine with the obfuscated `ef.e` error by preserving youtubedl-common's reflective ZIP runtime handlers. Initialization failures now show an actionable message instead of the obfuscated class name.
+
 ## 0.1.0-alpha.3 — 2026-08-01
 
 - Target Android 16 / API 36 and update the Android build toolchain to its supported stable versions.

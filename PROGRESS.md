@@ -1,8 +1,16 @@
 # SubLingo Progress
 
-> Last updated: 2026-08-01
+> Last updated: 2026-08-15
 > Purpose: give any new agent a fast snapshot of the current implementation state.
-> Status precedence: the 2026-08-01 API 36/16 KB Alpha 3 release, the 2026-08-01 Alpha 2 release, the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+> Status precedence: the 2026-08-15 Release download-engine initialization fix, the 2026-08-01 API 36/16 KB Alpha 3 release, the 2026-08-01 Alpha 2 release, the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
+
+## Release download-engine initialization fix (2026-08-15)
+
+- Fixed the Release-only `下载引擎初始化失败：ef.e` failure reported on the OPPO PME110. R8 had removed constructors and interface methods from Apache Commons Compress `ZipExtraField` implementations, although youtubedl-common instantiates them through `Class.newInstance()` while extracting the packaged Python runtime. The obfuscated `ef.e` name mapped to `ExtraFieldUtils`, whose static registry then became unusable after the first failed initialization.
+- Added a focused R8 keep rule for reflective ZIP extra-field implementations. No Room schema, persisted media, cookies, keys, or download selection behavior changed.
+- Runtime initialization errors now retain useful nested messages and replace linkage/static-initializer failures with an actionable update prompt instead of exposing an obfuscated class name.
+- Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:verifyReleasePageSize` passed (137 unit tests, 0 failures/errors). The Release mapping confirms retained public constructors and ZIP interface methods for the reflected implementations; `git diff --check` passed. No emulator/device was connected for this fix, so a fresh-install Release smoke test on OPPO PME110 remains recommended.
+- Branch: `codex/fix-release-download-engine-init`.
 
 ## API 36 and 16 KB Alpha 3 release (2026-08-01)
 
