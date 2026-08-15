@@ -356,6 +356,10 @@ class DownloadWorker(
         addOption("--no-update")
         addOption("--no-playlist")
         addOption("--restrict-filenames")
+        // Bound stalled VPN/TLS connections so the worker can retry or report failure.
+        addOption("--socket-timeout", SOCKET_TIMEOUT_SECONDS.toString())
+        addOption("--retries", DOWNLOAD_RETRIES.toString())
+        addOption("--fragment-retries", DOWNLOAD_RETRIES.toString())
         addOption("--write-info-json")
         addOption("-f", attempt.formatSelector)
         if (attempt.mergeToMp4) addOption("--merge-output-format", "mp4")
@@ -480,6 +484,8 @@ class DownloadWorker(
         private const val TAG = "DownloadWorker"
         private const val MIN_MEDIA_BYTES = 64 * 1024L
         private const val MAX_BACKGROUND_RETRIES = 5
+        private const val SOCKET_TIMEOUT_SECONDS = 30
+        private const val DOWNLOAD_RETRIES = 2
         private const val PROGRESS_PERCENT_STEP = 3
         private const val PROGRESS_UPDATE_INTERVAL_MS = 2_000L
         private val SPEED_REGEX = Regex("\\bat\\s+(.+?)\\s+ETA\\b", RegexOption.IGNORE_CASE)

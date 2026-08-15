@@ -4,6 +4,13 @@
 > Purpose: give any new agent a fast snapshot of the current implementation state.
 > Status precedence: the 2026-08-15 Release download-engine initialization fix, the 2026-08-01 API 36/16 KB Alpha 3 release, the 2026-08-01 Alpha 2 release, the 2026-07-29 vocabulary foreign-key fix, the 2026-07-26 review lemma/card-switch and bilingual-mapping fixes, the 2026-07-25 player/transcript and review-vocabulary fixes, the 2026-07-23 M5 acceptance and product update, the 2026-07-22 acceptance section, and the 2026-07-21 snapshot below are authoritative when older historical sections describe superseded behavior.
 
+## YouTube network timeout handling (2026-08-15)
+
+- Added yt-dlp `--socket-timeout 30`, `--retries 2`, and `--fragment-retries 2` to every download request. This bounds stalled VPN/TLS connections that previously left the UI at “正在准备下载” indefinitely, while preserving the existing format fallback and cancellation behavior.
+- PME110 real-link validation showed the engine initialized correctly, but both yt-dlp attempts waited without receiving a YouTube HTTP response. Device Wi-Fi/VPN reported validated connectivity and could reach other hosts, while YouTube HTTPS connections timed out through the active `com.nebula.clashmi` proxy path. No media was downloaded or deleted.
+- Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:verifyReleasePageSize` passed. No Room schema or persisted-data changes.
+- Branch: `codex/fix-release-download-engine-init`; follow-up commit updates PR #8.
+
 ## Release download-engine initialization fix (2026-08-15)
 
 - Fixed the Release-only `下载引擎初始化失败：ef.e` failure reported on the OPPO PME110. R8 had removed constructors and interface methods from Apache Commons Compress `ZipExtraField` implementations, although youtubedl-common instantiates them through `Class.newInstance()` while extracting the packaged Python runtime. The obfuscated `ef.e` name mapped to `ExtraFieldUtils`, whose static registry then became unusable after the first failed initialization.
