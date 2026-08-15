@@ -9,6 +9,7 @@
 - Added yt-dlp `--socket-timeout 30`, `--retries 2`, and `--fragment-retries 2` to every download request. This bounds stalled VPN/TLS connections that previously left the UI at “正在准备下载” indefinitely, while preserving the existing format fallback and cancellation behavior.
 - PME110 follow-up showed the new flags were present in the live yt-dlp command, but YouTube extraction produced no progress callback for more than two minutes. Added a cancellation-safe 90-second idle watchdog that terminates the matching yt-dlp process and surfaces a network/VPN diagnostic instead of waiting for the Android job scheduler limit.
 - PME110 real-link validation showed the engine initialized correctly, but both yt-dlp attempts waited without receiving a YouTube HTTP response. Device Wi-Fi/VPN reported validated connectivity and could reach other hosts, while YouTube HTTPS connections timed out through the active `com.nebula.clashmi` proxy path. No media was downloaded or deleted.
+- A no-output watchdog timeout now stops the current job immediately instead of trying every YouTube format/client variant and entering WorkManager backoff. The task reports `下载请求超时，请检查网络或 VPN 分流设置`; ordinary transient network failures still retry in the background.
 - Automated validation with Android Studio JBR 17: `:app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:verifyReleasePageSize` passed. No Room schema or persisted-data changes.
 - Branch: `codex/fix-release-download-engine-init`; follow-up commit updates PR #8.
 

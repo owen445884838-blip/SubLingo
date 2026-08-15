@@ -145,6 +145,10 @@ class DownloadWorker(
                         // unique-work replacement, or worker stop), not a failed format attempt.
                         // Never swallow it and continue into another yt-dlp request/progress update.
                         if (error is CancellationException || isStopped) throw error
+                        // No output at all means extraction never reached YouTube. Trying the
+                        // remaining format/client variants would use the same blocked route and
+                        // postpone the actionable VPN diagnostic by several minutes.
+                        if (error is DownloadAttemptIdleTimeoutException) throw error
                         failures += error
                         Log.w(TAG, "download attempt ${index + 1}/${attempts.size} (${attempt.label}) failed: ${error.message}")
                         null
@@ -318,7 +322,7 @@ class DownloadWorker(
                 }
             }
             if (timedOut.get()) {
-                throw YoutubeDLException("下载请求超时，请检查网络或 VPN 分流设置")
+                throw DownloadAttemptIdleTimeoutException()
             }
             response
         } finally {
@@ -508,6 +512,10 @@ class DownloadWorker(
         val percent: Float,
         val etaSeconds: Long,
         val speed: String?,
+    )
+
+    private class DownloadAttemptIdleTimeoutException : IllegalStateException(
+        "下载请求超时，请检查网络或 VPN 分流设置",
     )
 
     companion object {
