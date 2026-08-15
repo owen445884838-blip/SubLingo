@@ -38,6 +38,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
 
 class DownloadWorker(
     context: Context,
@@ -276,9 +278,32 @@ class DownloadWorker(
     ): YoutubeDLResponse {
         var lastCallbackAt = 0L
         var lastPercent = -1
+        val lastActivityAt = AtomicLong(android.os.SystemClock.elapsedRealtime())
+        val timedOut = AtomicBoolean(false)
         activeProcessIds = activeProcessIds + processId
+        val watchdog = Thread {
+            try {
+                while (!Thread.currentThread().isInterrupted) {
+                    Thread.sleep(WATCHDOG_POLL_INTERVAL_MS)
+                    val idleFor = android.os.SystemClock.elapsedRealtime() - lastActivityAt.get()
+                    if (idleFor >= DOWNLOAD_ATTEMPT_IDLE_TIMEOUT_MS) {
+                        timedOut.set(true)
+                        Log.w(TAG, "Download attempt timed out while idle: $processId")
+                        runCatching { YoutubeDL.getInstance().destroyProcessById(processId) }
+                        break
+                    }
+                }
+            } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }.apply {
+            name = "sublingo-download-watchdog"
+            isDaemon = true
+            start()
+        }
         return try {
-            YoutubeDL.getInstance().execute(request, processId) { progress: Float, etaSeconds: Long, line: String ->
+            val response = YoutubeDL.getInstance().execute(request, processId) { progress: Float, etaSeconds: Long, line: String ->
+                lastActivityAt.set(android.os.SystemClock.elapsedRealtime())
                 val current = progress.toInt()
                 val now = android.os.SystemClock.elapsedRealtime()
                 if (current >= 0 && (
@@ -292,7 +317,12 @@ class DownloadWorker(
                     runBlocking { onProgress(DownloadProgress(progress, etaSeconds, parseSpeed(line))) }
                 }
             }
+            if (timedOut.get()) {
+                throw YoutubeDLException("下载请求超时，请检查网络或 VPN 分流设置")
+            }
+            response
         } finally {
+            watchdog.interrupt()
             activeProcessIds = activeProcessIds - processId
         }
     }
@@ -486,6 +516,8 @@ class DownloadWorker(
         private const val MAX_BACKGROUND_RETRIES = 5
         private const val SOCKET_TIMEOUT_SECONDS = 30
         private const val DOWNLOAD_RETRIES = 2
+        private const val WATCHDOG_POLL_INTERVAL_MS = 5_000L
+        private const val DOWNLOAD_ATTEMPT_IDLE_TIMEOUT_MS = 90_000L
         private const val PROGRESS_PERCENT_STEP = 3
         private const val PROGRESS_UPDATE_INTERVAL_MS = 2_000L
         private val SPEED_REGEX = Regex("\\bat\\s+(.+?)\\s+ETA\\b", RegexOption.IGNORE_CASE)
