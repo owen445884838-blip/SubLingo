@@ -38,6 +38,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.isActive
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
 
 class DownloadWorker(
     context: Context,
@@ -143,6 +145,10 @@ class DownloadWorker(
                         // unique-work replacement, or worker stop), not a failed format attempt.
                         // Never swallow it and continue into another yt-dlp request/progress update.
                         if (error is CancellationException || isStopped) throw error
+                        // No output at all means extraction never reached YouTube. Trying the
+                        // remaining format/client variants would use the same blocked route and
+                        // postpone the actionable VPN diagnostic by several minutes.
+                        if (error is DownloadAttemptIdleTimeoutException) throw error
                         failures += error
                         Log.w(TAG, "download attempt ${index + 1}/${attempts.size} (${attempt.label}) failed: ${error.message}")
                         null
@@ -276,9 +282,32 @@ class DownloadWorker(
     ): YoutubeDLResponse {
         var lastCallbackAt = 0L
         var lastPercent = -1
+        val lastActivityAt = AtomicLong(android.os.SystemClock.elapsedRealtime())
+        val timedOut = AtomicBoolean(false)
         activeProcessIds = activeProcessIds + processId
+        val watchdog = Thread {
+            try {
+                while (!Thread.currentThread().isInterrupted) {
+                    Thread.sleep(WATCHDOG_POLL_INTERVAL_MS)
+                    val idleFor = android.os.SystemClock.elapsedRealtime() - lastActivityAt.get()
+                    if (idleFor >= DOWNLOAD_ATTEMPT_IDLE_TIMEOUT_MS) {
+                        timedOut.set(true)
+                        Log.w(TAG, "Download attempt timed out while idle: $processId")
+                        runCatching { YoutubeDL.getInstance().destroyProcessById(processId) }
+                        break
+                    }
+                }
+            } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }.apply {
+            name = "sublingo-download-watchdog"
+            isDaemon = true
+            start()
+        }
         return try {
-            YoutubeDL.getInstance().execute(request, processId) { progress: Float, etaSeconds: Long, line: String ->
+            val response = YoutubeDL.getInstance().execute(request, processId) { progress: Float, etaSeconds: Long, line: String ->
+                lastActivityAt.set(android.os.SystemClock.elapsedRealtime())
                 val current = progress.toInt()
                 val now = android.os.SystemClock.elapsedRealtime()
                 if (current >= 0 && (
@@ -292,7 +321,12 @@ class DownloadWorker(
                     runBlocking { onProgress(DownloadProgress(progress, etaSeconds, parseSpeed(line))) }
                 }
             }
+            if (timedOut.get()) {
+                throw DownloadAttemptIdleTimeoutException()
+            }
+            response
         } finally {
+            watchdog.interrupt()
             activeProcessIds = activeProcessIds - processId
         }
     }
@@ -356,6 +390,10 @@ class DownloadWorker(
         addOption("--no-update")
         addOption("--no-playlist")
         addOption("--restrict-filenames")
+        // Bound stalled VPN/TLS connections so the worker can retry or report failure.
+        addOption("--socket-timeout", SOCKET_TIMEOUT_SECONDS.toString())
+        addOption("--retries", DOWNLOAD_RETRIES.toString())
+        addOption("--fragment-retries", DOWNLOAD_RETRIES.toString())
         addOption("--write-info-json")
         addOption("-f", attempt.formatSelector)
         if (attempt.mergeToMp4) addOption("--merge-output-format", "mp4")
@@ -476,10 +514,18 @@ class DownloadWorker(
         val speed: String?,
     )
 
+    private class DownloadAttemptIdleTimeoutException : IllegalStateException(
+        "下载请求超时，请检查网络或 VPN 分流设置",
+    )
+
     companion object {
         private const val TAG = "DownloadWorker"
         private const val MIN_MEDIA_BYTES = 64 * 1024L
         private const val MAX_BACKGROUND_RETRIES = 5
+        private const val SOCKET_TIMEOUT_SECONDS = 30
+        private const val DOWNLOAD_RETRIES = 2
+        private const val WATCHDOG_POLL_INTERVAL_MS = 5_000L
+        private const val DOWNLOAD_ATTEMPT_IDLE_TIMEOUT_MS = 90_000L
         private const val PROGRESS_PERCENT_STEP = 3
         private const val PROGRESS_UPDATE_INTERVAL_MS = 2_000L
         private val SPEED_REGEX = Regex("\\bat\\s+(.+?)\\s+ETA\\b", RegexOption.IGNORE_CASE)

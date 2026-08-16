@@ -26,6 +26,6 @@ class YoutubeDlRuntimeInstrumentedTest {
         val request = YoutubeDLRequest(emptyList<String>()).apply { addOption("--version") }
         val response = YoutubeDL.getInstance().execute(request, "page-size-runtime-test")
         assertEquals(0, response.exitCode)
-        assertTrue(response.out.trim().isNotEmpty())
+        assertEquals(YoutubeDlRuntime.PACKAGED_YTDLP_VERSION, response.out.trim())
     }
 }

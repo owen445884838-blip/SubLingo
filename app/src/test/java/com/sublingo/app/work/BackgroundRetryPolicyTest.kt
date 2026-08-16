@@ -16,4 +16,12 @@ class BackgroundRetryPolicyTest {
         assertFalse(BackgroundRetryPolicy.isTransientNetworkFailure(IllegalStateException("HTTP Error 403: Forbidden")))
         assertFalse(BackgroundRetryPolicy.isTransientNetworkFailure(IllegalStateException("Sign in to confirm you're not a bot")))
     }
+
+    @Test fun doesNotRetryAnIdleDownloaderRoutingFailure() {
+        assertFalse(
+            BackgroundRetryPolicy.isTransientNetworkFailure(
+                IllegalStateException("下载请求超时，请检查网络或 VPN 分流设置"),
+            ),
+        )
+    }
 }

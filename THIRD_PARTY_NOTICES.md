@@ -9,7 +9,7 @@ dependencies remain authoritative in the SBOM.
 | Component family | Version used | Typical upstream license | Notes |
 |---|---:|---|---|
 | youtubedl-android library / FFmpeg / aria2c packages | 0.18.1 | GPL-3.0 and bundled component licenses | Includes native/Python runtime payloads; corresponding-source obligations must be honored |
-| yt-dlp | packaged by youtubedl-android | Unlicense / upstream notices | Runtime extractor/downloader |
+| yt-dlp | nightly 2026.08.16.020253 | Unlicense / upstream notices | Official zipapp overrides youtubedl-android's stale embedded extractor; includes the upstream EJS solver distribution |
 | AndroidX / Jetpack Compose / Material3 / Media3 / Room / WorkManager | resolved in SBOM | Apache-2.0 | Google/Android open-source libraries |
 | Hilt / Dagger | 2.52 | Apache-2.0 | Dependency injection and generated code |
 | Kotlin / kotlinx.coroutines / kotlinx.serialization | resolved in SBOM | Apache-2.0 | Kotlin runtime/tooling libraries |

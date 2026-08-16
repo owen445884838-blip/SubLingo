@@ -1,16 +1,16 @@
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.5",
-    "serialNumber": "urn:uuid:353e06ce-8865-4153-af12-b0f8844854da",
+    "serialNumber": "urn:uuid:89216cd7-3bf6-4b1a-8d0d-04d7d0626850",
     "version": 1,
     "metadata": {
-        "timestamp": "2026-08-01T07:05:05.082053Z",
+        "timestamp": "2026-08-16T04:53:29.326049Z",
         "component": {
             "type": "application",
             "group": "com.sublingo",
             "name": "SubLingo",
-            "version": "0.1.0-alpha.3",
-            "purl": "pkg:apk/com.sublingo.app@0.1.0-alpha.3"
+            "version": "0.1.0-alpha.4",
+            "purl": "pkg:apk/com.sublingo.app@0.1.0-alpha.4"
         },
         "tools": [
             {
@@ -20,6 +20,36 @@
         ]
     },
     "components": [
+        {
+            "type": "library",
+            "group": "yt-dlp",
+            "name": "yt-dlp",
+            "version": "2026.08.16.020253",
+            "purl": "pkg:github/yt-dlp/yt-dlp@2026.08.16.020253",
+            "hashes": [
+                {
+                    "alg": "SHA-256",
+                    "content": "33075a8f5a0ee7189302dde76d0caab8a2c1c4a1b82235ed761814df89e0900d"
+                }
+            ],
+            "licenses": [
+                {
+                    "license": {
+                        "id": "Unlicense"
+                    }
+                }
+            ],
+            "externalReferences": [
+                {
+                    "type": "vcs",
+                    "url": "https://github.com/yt-dlp/yt-dlp"
+                },
+                {
+                    "type": "distribution",
+                    "url": "https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/download/2026.08.16.020253/yt-dlp"
+                }
+            ]
+        },
         {
             "type": "library",
             "group": "androidx.activity",

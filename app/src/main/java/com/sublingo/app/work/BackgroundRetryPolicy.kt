@@ -6,6 +6,10 @@ object BackgroundRetryPolicy {
     fun isTransientNetworkFailure(error: Throwable): Boolean {
         if (generateSequence(error) { it.cause }.any { it is IOException }) return true
         val message = generateSequence(error) { it.cause }.joinToString(" ") { it.message.orEmpty() }.lowercase()
+        // The downloader's watchdog only emits this after a full interval without a single
+        // yt-dlp callback. Retrying cannot change a deterministic VPN/proxy routing failure and
+        // would hide the diagnostic behind WorkManager's backoff schedule.
+        if (message.contains("下载请求超时，请检查网络或 vpn 分流设置")) return false
         if (message.contains("403") || message.contains("401") || message.contains("sign in") || message.contains("not a bot")) return false
         return TRANSIENT_MARKERS.any(message::contains)
     }

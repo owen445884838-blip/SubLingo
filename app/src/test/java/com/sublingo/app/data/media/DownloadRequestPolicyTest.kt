@@ -18,7 +18,7 @@ class DownloadRequestPolicyTest {
         assertTrue(attempts.first().label.contains("1080p"))
         assertTrue(attempts.first().nativeMuxAudioSelector != null)
         assertTrue(attempts.first().formatSelector.contains("height<=1080"))
-        assertTrue(attempts.any { it.extractorArgs == "youtube:player_client=android_vr" })
+        assertTrue(attempts.any { it.extractorArgs == "youtube:player_client=visionos" })
         assertEquals(4, attempts.last().hlsConcurrentFragments)
     }
 
@@ -33,14 +33,14 @@ class DownloadRequestPolicyTest {
         assertTrue(attempts.first().formatSelector.contains('+'))
     }
 
-    @Test fun authenticatedYoutubeSkipsAndroidVrBecauseItRejectsCookies() {
+    @Test fun authenticatedYoutubeSkipsAnonymousVisionOsClient() {
         val attempts = DownloadRequestPolicy.attempts(
             "https://www.youtube.com/watch?v=example",
             ffmpegAvailable = false,
             cookieConfigured = true,
         )
 
-        assertTrue(attempts.none { it.extractorArgs?.contains("android_vr") == true })
+        assertTrue(attempts.none { it.extractorArgs?.contains("visionos") == true })
         assertTrue(attempts.any { it.extractorArgs?.contains("web_safari") == true })
     }
 
@@ -94,6 +94,31 @@ class DownloadRequestPolicyTest {
 
         assertTrue(message.contains("App 内登录"))
         assertTrue(message.contains("登录验证"))
+    }
+
+    @Test fun youtubeJavascriptChallengeBecomesEngineUpdateMessageWithoutRawOutput() {
+        val rawError = """
+            WARNING: [youtube] [jsc] Error solving n challenge request using "quickjs" provider:
+            Error running QuickJS process (returncode: 1): found 0 n function possibilities.
+            WARNING: Only images are available for download
+            ERROR: Requested format is not available
+        """.trimIndent()
+
+        val message = DownloadRequestPolicy.failureMessage(
+            "https://www.youtube.com/watch?v=abc",
+            listOf(IllegalStateException(rawError)),
+            cookieConfigured = false,
+        )
+
+        assertTrue(message.contains("下载引擎"))
+        assertTrue(message.contains("更新 SubLingo"))
+        assertFalse(message.contains("QuickJS"))
+        assertFalse(
+            DownloadRequestPolicy.requiresYoutubeLogin(
+                "https://www.youtube.com/watch?v=abc",
+                listOf(IllegalStateException(message)),
+            ),
+        )
     }
 
     @Test fun netscapeCookieInputIsAcceptedWithoutTreatingCommentsAsCookies() {

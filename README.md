@@ -61,9 +61,9 @@ Release 签名通过环境变量配置，详情见 [RELEASE_CHECKLIST.md](RELEAS
 
 ## 项目状态
 
-当前版本为 `0.1.0-alpha.3`，M5 工程验收已经完成。详细实现进度、设备验收及构建产物信息见 [PROGRESS.md](PROGRESS.md)。
+当前版本为 `0.1.0-alpha.4`，M5 工程验收已经完成。详细实现进度、设备验收及构建产物信息见 [PROGRESS.md](PROGRESS.md)。
 
-可安装的验收 APK 位于 GitHub Releases 的 `v0.1.0-alpha.3` 预发布中。该 APK 是经过 R8 和资源压缩的 Release 构建，但使用 Android 验收/调试证书签名，仅用于测试；它不是生产签名包，也不适合提交应用商店。
+可安装的验收 APK 位于 GitHub Releases 的 `v0.1.0-alpha.4` 预发布中。该 APK 是经过 R8 和资源压缩的 Release 构建，但使用 Android 验收/调试证书签名，仅用于测试；它不是生产签名包，也不适合提交应用商店。
 
 ## 隐私与许可证
 
