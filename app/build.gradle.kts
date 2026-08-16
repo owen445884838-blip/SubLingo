@@ -31,6 +31,9 @@ fun File.sha256(): String {
     return digest.digest().joinToString("") { byte: Byte -> "%02x".format(byte) }
 }
 
+val packagedYtdlpVersion = "2026.08.16.020253"
+val packagedYtdlp = layout.projectDirectory.file("src/main/res/raw/ytdlp")
+
 val releaseStoreFilePath = providers.environmentVariable("SUBLINGO_RELEASE_STORE_FILE").orNull
 val releaseStorePassword = providers.environmentVariable("SUBLINGO_RELEASE_STORE_PASSWORD").orNull
 val releaseKeyAlias = providers.environmentVariable("SUBLINGO_RELEASE_KEY_ALIAS").orNull
@@ -167,13 +170,14 @@ tasks.register("generateReleaseSbom") {
     group = "reporting"
     description = "Generates a CycloneDX JSON inventory from the resolved Release runtime artifacts."
     val output = rootProject.layout.projectDirectory.file("sbom/sublingo-release.cdx.json")
+    inputs.file(packagedYtdlp)
     outputs.file(output)
     doLast {
         val artifacts = configurations.getByName("releaseRuntimeClasspath")
             .resolvedConfiguration
             .resolvedArtifacts
             .sortedWith(compareBy({ it.moduleVersion.id.group }, { it.name }, { it.moduleVersion.id.version }))
-        val components = artifacts.distinctBy {
+        val mavenComponents = artifacts.distinctBy {
             "${it.moduleVersion.id.group}:${it.name}:${it.moduleVersion.id.version}"
         }.map { artifact ->
             val group = artifact.moduleVersion.id.group
@@ -188,6 +192,26 @@ tasks.register("generateReleaseSbom") {
                 "hashes" to listOf(mapOf("alg" to "SHA-256", "content" to artifact.file.sha256())),
             )
         }
+        val components = listOf(
+            mapOf(
+                "type" to "library",
+                "group" to "yt-dlp",
+                "name" to "yt-dlp",
+                "version" to packagedYtdlpVersion,
+                "purl" to "pkg:github/yt-dlp/yt-dlp@$packagedYtdlpVersion",
+                "hashes" to listOf(
+                    mapOf("alg" to "SHA-256", "content" to packagedYtdlp.asFile.sha256()),
+                ),
+                "licenses" to listOf(mapOf("license" to mapOf("id" to "Unlicense"))),
+                "externalReferences" to listOf(
+                    mapOf("type" to "vcs", "url" to "https://github.com/yt-dlp/yt-dlp"),
+                    mapOf(
+                        "type" to "distribution",
+                        "url" to "https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/download/$packagedYtdlpVersion/yt-dlp",
+                    ),
+                ),
+            ),
+        ) + mavenComponents
         val document = mapOf(
             "bomFormat" to "CycloneDX",
             "specVersion" to "1.5",

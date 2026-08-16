@@ -70,7 +70,7 @@ object DownloadRequestPolicy {
                 add(DownloadAttempt("YouTube 直连 MP4", YOUTUBE_PROGRESSIVE_MP4))
                 add(DownloadAttempt("YouTube Safari 直连 MP4", YOUTUBE_PROGRESSIVE_MP4, extractorArgs = "youtube:player_client=web_safari", forceIpv4 = true))
                 if (!cookieConfigured) {
-                    add(DownloadAttempt("YouTube Android VR 直连 MP4", YOUTUBE_PROGRESSIVE_MP4, extractorArgs = "youtube:player_client=android_vr", forceIpv4 = true))
+                    add(DownloadAttempt("YouTube VisionOS 直连 MP4", YOUTUBE_PROGRESSIVE_MP4, extractorArgs = "youtube:player_client=visionos", forceIpv4 = true))
                 }
                 add(DownloadAttempt("YouTube HLS 兼容流", SINGLE_FILE, forceIpv4 = true, hlsConcurrentFragments = 4))
             }.distinctBy { listOf(it.formatSelector, it.extractorArgs, it.forceIpv4, it.hlsConcurrentFragments) }
@@ -122,6 +122,12 @@ object DownloadRequestPolicy {
     fun failureMessage(url: String, errors: List<Throwable>, cookieConfigured: Boolean): String {
         val combined = errors.joinToString("\n") { it.message.orEmpty() }.lowercase()
         return when {
+            site(url) == DownloadSite.YOUTUBE && (
+                "error solving n challenge" in combined ||
+                    "challenge solving failed" in combined ||
+                    "found 0 n function possibilities" in combined ||
+                    "only images are available" in combined
+            ) -> "YouTube 播放器验证规则已更新，当前下载引擎无法解析。请更新 SubLingo 后重试。"
             site(url) == DownloadSite.YOUTUBE && (
                 "sign in to confirm" in combined ||
                     "not a bot" in combined ||

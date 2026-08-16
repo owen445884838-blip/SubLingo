@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update the embedded yt-dlp engine from `2025.11.12` to the verified `2026.08.16.020253` nightly, replacing stale extracted copies on app upgrade and using the current anonymous `visionos` YouTube fallback instead of the broken `android_vr` route.
+- Convert YouTube JavaScript challenge failures into a concise engine-update message instead of exposing raw yt-dlp diagnostics or incorrectly requiring account login.
 - Fix Release builds failing to initialize the download engine with the obfuscated `ef.e` error by preserving youtubedl-common's reflective ZIP runtime handlers. Initialization failures now show an actionable message instead of the obfuscated class name.
 
 ## 0.1.0-alpha.3 — 2026-08-01
